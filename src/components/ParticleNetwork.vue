@@ -9,12 +9,15 @@ export default {
 	},
 	data () {
 		return {
-			density: 10000,
+			canvas: undefined,
+			totalParticles: undefined,
+			density: 15000,
 			counter: 0,
 			interval: null,
 			particles: [],
+			interactionParticle: null,
 			animationFrame: undefined,
-			width: window.innerWidth || document.documentElement.clientWidth,
+			width: (window.innerWidth || document.documentElement.clientWidth) / 2,
 			height: window.innerHeight || document.documentElement.clientHeight
 		}
 	},
@@ -23,7 +26,7 @@ export default {
 	},
 	methods: {
 		onResize () {
-			this.width = window.innerWidth || document.documentElement.clientWidth
+			this.width = (window.innerWidth || document.documentElement.clientWidth) / 2
 			this.height = window.innerHeight || document.documentElement.clientHeight
 			const scale = window.devicePixelRatio
 			const canvas = document.querySelector('canvas')
@@ -38,26 +41,70 @@ export default {
 				velocity: 1,
 				density: this.density,
 				lineDistance: 200,
-				lineColor: '#1d1d1d',
-				particleColor: '#1d1d1d',
+				lineColor: '#ccc',
+				particleColor: '#333',
 				opacity: 1
 			}
 			this.onResize()
 			const canvas = document.querySelector('canvas')
+			this.canvas = canvas
 			const ctx = canvas.getContext('2d')
-			var getLimitedRandom = function(min, max, roundToInteger) {
-				var number = Math.random() * (max - min) + min;
-				if (roundToInteger) {
-					number = Math.round(number);
+
+			const createInteractionParticle = e => {
+				this.interactionParticle = initParticle(e.offsetX, e.offsetY)
+				this.interactionParticle.velocity = {
+					x: 0,
+					y: 0
 				}
-				return number;
-			};
-			const initParticle = () => {
+				this.interactionParticle.color = '#666'
+				this.particles.push(this.interactionParticle)
+			}
+			const removeInteractionParticle = () => {
+				const index = this.particles.indexOf(this.interactionParticle)
+				if (index > -1) {
+					this.interactionParticle = null
+					this.particles.splice(index, 1)
+				}
+			}
+			const onMouseMove = e => {
+				if (!this.interactionParticle) {
+					createInteractionParticle(e)
+				}
+				console.log(this.interactionParticle)
+				this.interactionParticle.x = e.offsetX
+				this.interactionParticle.y = e.offsetY
+			}
+			canvas.addEventListener('mousemove', onMouseMove)
+			canvas.addEventListener('mouseout', removeInteractionParticle)
+
+			const getLimitedRandom = function(min, max, roundToInteger) {
+				let number = Math.random() * (max - min) + min
+				if (roundToInteger) {
+					number = Math.round(number)
+				}
+				return number
+			}
+			const getHslaColor = (saturation, lightness, alpha) => {
+				// const hueDelta = Math.trunc(360 / this.totalParticles)
+				// const hue = this.counter * hueDelta
+				const hue = Math.random() * 360
+				if (hue > 215 && hue < 265) {
+					const gain = 24
+					const blueDelta = 1 - Math.abs(hue - 240) / 25
+					const change = Math.floor(gain * blueDelta)
+					lightness += change
+					saturation -= change
+				}
+				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
+			}
+
+			const initParticle = (xCoord, yCoord) => {
 				return {
+					color: getHslaColor(100, 50, 1),
 					radius: getLimitedRandom(1.5, 2.5),
 					opacity: 0,
-					x: Math.random() * canvas.width,
-					y: Math.random() * canvas.height,
+					x: xCoord || Math.random() * canvas.width,
+					y: yCoord || Math.random() * canvas.height,
 					velocity: {
 						x: (Math.random() - 0.5) * options.velocity,
 						y: (Math.random() - 0.5) * options.velocity
@@ -67,6 +114,7 @@ export default {
 
 			const createParticles = (isInit) => {
 				const quantity = canvas.width * canvas.height / options.density
+				// this.totalParticles = quantity
 				if (isInit) {
 					this.particles = []
 					clearInterval(this.interval)
@@ -88,7 +136,7 @@ export default {
 
 			const drawParticle = (p) => {
 				ctx.beginPath()
-				ctx.fillStyle = options.particleColor
+				ctx.fillStyle = p.color
 				ctx.globalAlpha = p.opacity
 				ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI)
 				ctx.fill()
@@ -96,7 +144,7 @@ export default {
 			
 			const updateParticle = (p) => {
 				p.opacity < 1
-					? p.opacity += 0.01
+					? p.opacity += 0.05
 					: p.opacity = 1
 				if (p.x > canvas.width + 100 || p.x < -100) {
 					p.velocity.x = -p.velocity.x
@@ -110,7 +158,7 @@ export default {
 
 			const updateParticles = () => {
 				if (canvas) {
-					ctx.clearRect(0, 0, window.innerWidth || document.documentElement.clientWidth, window.innerHeight || document.documentElement.clientHeight)
+					ctx.clearRect(0, 0, this.width, this.height)
 					ctx.globalAlpha = 1
 
 					for (let i = 0; i < this.particles.length; i++) {
@@ -129,9 +177,18 @@ export default {
 								continue
 							}
 							ctx.beginPath()
-							ctx.strokeStyle = options.lineColor
+							let lineColor = options.lineColor
+							if (this.interactionParticle) {
+								const interactionIndex = this.particles.indexOf(this.interactionParticle)
+								if (i === interactionIndex) {
+									lineColor = p2.color
+								} else if (j === interactionIndex) {
+									lineColor = p1.color
+								}
+							}
+							ctx.strokeStyle = lineColor
 							ctx.globalAlpha = (options.lineDistance - distance) / options.lineDistance * p1.opacity * p2.opacity
-							ctx.lineWidth = 0.5
+							ctx.lineWidth = 0.8
 							ctx.moveTo(p1.x, p1.y)
 							ctx.lineTo(p2.x, p2.y)
 							ctx.stroke()
