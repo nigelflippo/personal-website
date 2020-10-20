@@ -5,15 +5,19 @@
 
 export default {
 	created () {
+		this.setColorSpectrum(60)
 		window.addEventListener('resize', this.onResize)
 	},
 	data () {
 		return {
+			colorSpectrum: [],
 			canvas: undefined,
 			totalParticles: undefined,
 			density: 15000,
 			counter: 0,
+			colorCounter: 0,
 			interval: null,
+			colorInterval: null,
 			particles: [],
 			interactionParticle: null,
 			animationFrame: undefined,
@@ -25,6 +29,20 @@ export default {
 		this.drawChart()
 	},
 	methods: {
+		setColorSpectrum (amount) {
+			const hueDelta = Math.trunc(360 / amount)
+			const getHslaColor = (hue, saturation, lightness, alpha = 1) => {
+				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
+			}
+			for (let i = 0; i < amount; i++) {
+				const hue = i * hueDelta
+				this.colorSpectrum.push(getHslaColor(hue, 100, 40, 1))
+			}
+			this.colorInterval = setInterval(() => {
+				this.currColor = this.colorSpectrum[this.colorCounter]
+				this.colorCounter = (this.colorCounter + 1) % this.colorSpectrum.length
+			}, 500)
+		},
 		onResize () {
 			this.width = (window.innerWidth || document.documentElement.clientWidth) / 2
 			this.height = window.innerHeight || document.documentElement.clientHeight
@@ -42,7 +60,7 @@ export default {
 				density: this.density,
 				lineDistance: 200,
 				lineColor: '#ccc',
-				particleColor: '#333',
+				particleColor: '#666',
 				opacity: 1
 			}
 			this.onResize()
@@ -56,7 +74,9 @@ export default {
 					x: 0,
 					y: 0
 				}
-				this.interactionParticle.color = '#666'
+				// this.interactionParticle.color = getHslaColor(100, 50, 1)
+				this.interactionParticle.color = this.currColor
+				this.interactionParticle.active = true
 				this.particles.push(this.interactionParticle)
 			}
 			const removeInteractionParticle = () => {
@@ -70,7 +90,6 @@ export default {
 				if (!this.interactionParticle) {
 					createInteractionParticle(e)
 				}
-				console.log(this.interactionParticle)
 				this.interactionParticle.x = e.offsetX
 				this.interactionParticle.y = e.offsetY
 			}
@@ -84,23 +103,24 @@ export default {
 				}
 				return number
 			}
-			const getHslaColor = (saturation, lightness, alpha) => {
-				// const hueDelta = Math.trunc(360 / this.totalParticles)
-				// const hue = this.counter * hueDelta
-				const hue = Math.random() * 360
-				if (hue > 215 && hue < 265) {
-					const gain = 24
-					const blueDelta = 1 - Math.abs(hue - 240) / 25
-					const change = Math.floor(gain * blueDelta)
-					lightness += change
-					saturation -= change
-				}
-				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
-			}
+			// const getHslaColor = (saturation, lightness, alpha) => {
+			// 	// const hueDelta = Math.trunc(360 / this.totalParticles)
+			// 	// const hue = this.counter * hueDelta
+			// 	const hue = Math.random() * 360
+			// 	if (hue > 215 && hue < 265) {
+			// 		const gain = 24
+			// 		const blueDelta = 1 - Math.abs(hue - 240) / 25
+			// 		const change = Math.floor(gain * blueDelta)
+			// 		lightness += change
+			// 		saturation -= change
+			// 	}
+			// 	return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
+			// }
 
 			const initParticle = (xCoord, yCoord) => {
 				return {
-					color: getHslaColor(100, 50, 1),
+					active: false,
+					color: options.particleColor,
 					radius: getLimitedRandom(1.5, 2.5),
 					opacity: 0,
 					x: xCoord || Math.random() * canvas.width,
@@ -163,29 +183,61 @@ export default {
 
 					for (let i = 0; i < this.particles.length; i++) {
 						for (let j = this.particles.length - 1; j > i; j--) {
+							if (this.interactionParticle) {
+								this.interactionParticle.color = this.currColor
+							}
 							const p1 = this.particles[i]
 							const p2 = this.particles[j]
 							let distance = Math.min(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
 							if (distance > options.lineDistance) {
-								continue;
+								continue
 							}
 							distance = Math.sqrt(
 								Math.pow(p1.x - p2.x, 2) +
 								Math.pow(p1.y - p2.y, 2)
 							)
 							if (distance > options.lineDistance) {
+								if (p1 === this.interactionParticle) {
+									p2.active = false
+								}
+								if (p2 === this.interactionParticle) {
+									p1.active = false
+								}
 								continue
 							}
-							ctx.beginPath()
 							let lineColor = options.lineColor
 							if (this.interactionParticle) {
-								const interactionIndex = this.particles.indexOf(this.interactionParticle)
-								if (i === interactionIndex) {
-									lineColor = p2.color
-								} else if (j === interactionIndex) {
-									lineColor = p1.color
+								if (p1 === this.interactionParticle) {
+									p2.active = true
 								}
+								if (p2 === this.interactionParticle) {
+									p1.active = true
+								}
+								if (p1.active) {
+									p2.active = true
+									p1.color = this.interactionParticle.color
+									p2.color = this.interactionParticle.color
+									lineColor = this.interactionParticle.color
+								} else {
+									p1.color = options.particleColor
+									p2.active = false
+								}
+								if (p2.active) {
+									p1.active = true
+									p2.color = this.interactionParticle.color
+									p1.color = this.interactionParticle.color
+									lineColor = this.interactionParticle.color
+								} else {
+									p2.color = options.particleColor
+									p1.active = false
+								}
+							} else {
+								p1.active = false
+								p2.active = false
+								p1.color = options.particleColor
+								p2.color = options.particleColor
 							}
+							ctx.beginPath()
 							ctx.strokeStyle = lineColor
 							ctx.globalAlpha = (options.lineDistance - distance) / options.lineDistance * p1.opacity * p2.opacity
 							ctx.lineWidth = 0.8
