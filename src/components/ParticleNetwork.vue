@@ -6,6 +6,7 @@
 export default {
 	created () {
 		this.setColorSpectrum(60)
+		this.setRect()
 		window.addEventListener('resize', this.onResize)
 	},
 	data () {
@@ -20,32 +21,43 @@ export default {
 			colorInterval: null,
 			particles: [],
 			interactionParticle: null,
+			mobileInteractionParticle: null,
 			animationFrame: undefined,
-			width: (window.innerWidth || document.documentElement.clientWidth) / 2,
-			height: window.innerHeight || document.documentElement.clientHeight
+			width: undefined,
+			height: undefined
 		}
 	},
 	mounted () {
 		this.drawChart()
 	},
 	methods: {
+		setRect () {
+			let width = window.innerWidth || document.documentElement.clientWidth
+			if (window.innerWidth > 576) {
+				width = width / 2
+			}
+			this.width = width
+			this.height = window.innerHeight || document.documentElement.clientHeight
+		},
 		setColorSpectrum (amount) {
 			const hueDelta = Math.trunc(360 / amount)
-			const getHslaColor = (hue, saturation, lightness, alpha = 1) => {
+			const getHslaColor = (hue, saturation, lightness, alpha) => {
 				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
 			}
 			for (let i = 0; i < amount; i++) {
 				const hue = i * hueDelta
-				this.colorSpectrum.push(getHslaColor(hue, 100, 40, 1))
+				const saturation = 100
+				const lightness = 45
+				const alpha = 1.0
+				this.colorSpectrum.push(getHslaColor(hue, saturation, lightness, alpha))
 			}
 			this.colorInterval = setInterval(() => {
 				this.currColor = this.colorSpectrum[this.colorCounter]
 				this.colorCounter = (this.colorCounter + 1) % this.colorSpectrum.length
-			}, 500)
+			}, 250)
 		},
 		onResize () {
-			this.width = (window.innerWidth || document.documentElement.clientWidth) / 2
-			this.height = window.innerHeight || document.documentElement.clientHeight
+			this.setRect()
 			const scale = window.devicePixelRatio
 			const canvas = document.querySelector('canvas')
 			const ctx = canvas.getContext('2d')
@@ -59,8 +71,8 @@ export default {
 				velocity: 1,
 				density: this.density,
 				lineDistance: 200,
-				lineColor: '#ccc',
-				particleColor: '#666',
+				lineColor: '#999',
+				particleColor: '#999',
 				opacity: 1
 			}
 			this.onResize()
@@ -74,7 +86,6 @@ export default {
 					x: 0,
 					y: 0
 				}
-				// this.interactionParticle.color = getHslaColor(100, 50, 1)
 				this.interactionParticle.color = this.currColor
 				this.interactionParticle.active = true
 				this.particles.push(this.interactionParticle)
@@ -93,8 +104,27 @@ export default {
 				this.interactionParticle.x = e.offsetX
 				this.interactionParticle.y = e.offsetY
 			}
+			const onTouchMove = e => {
+				if (!this.interactionParticle) {
+					createInteractionParticle()
+				}
+				this.interactionParticle.x = e.changedTouches[0].clientX
+				this.interactionParticle.y = e.changedTouches[0].clientY
+			}
+			const onTouchEnd = () => {
+				removeInteractionParticle()
+			}
+			const onMouseDown = () => {
+				this.mobileInteractionParticle = initParticle(this.interactionParticle.x, this.interactionParticle.y, true)
+				this.particles.push(this.mobileInteractionParticle)
+			}
+
 			canvas.addEventListener('mousemove', onMouseMove)
 			canvas.addEventListener('mouseout', removeInteractionParticle)
+			canvas.addEventListener('touchmove', onTouchMove)
+			canvas.addEventListener('touchend', onTouchEnd)
+			canvas.addEventListener('mousedown', onMouseDown)
+			canvas.addEventListener('mouseup', removeInteractionParticle)
 
 			const getLimitedRandom = function(min, max, roundToInteger) {
 				let number = Math.random() * (max - min) + min
@@ -103,23 +133,10 @@ export default {
 				}
 				return number
 			}
-			// const getHslaColor = (saturation, lightness, alpha) => {
-			// 	// const hueDelta = Math.trunc(360 / this.totalParticles)
-			// 	// const hue = this.counter * hueDelta
-			// 	const hue = Math.random() * 360
-			// 	if (hue > 215 && hue < 265) {
-			// 		const gain = 24
-			// 		const blueDelta = 1 - Math.abs(hue - 240) / 25
-			// 		const change = Math.floor(gain * blueDelta)
-			// 		lightness += change
-			// 		saturation -= change
-			// 	}
-			// 	return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
-			// }
 
-			const initParticle = (xCoord, yCoord) => {
+			const initParticle = (xCoord, yCoord, isActive) => {
 				return {
-					active: false,
+					active: isActive || false,
 					color: options.particleColor,
 					radius: getLimitedRandom(1.5, 2.5),
 					opacity: 0,
@@ -134,7 +151,6 @@ export default {
 
 			const createParticles = (isInit) => {
 				const quantity = canvas.width * canvas.height / options.density
-				// this.totalParticles = quantity
 				if (isInit) {
 					this.particles = []
 					clearInterval(this.interval)
@@ -154,13 +170,13 @@ export default {
 			}
 			createParticles()
 
-			const drawParticle = (p) => {
-				ctx.beginPath()
-				ctx.fillStyle = p.color
-				ctx.globalAlpha = p.opacity
-				ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI)
-				ctx.fill()
-			}
+			// const drawParticle = (p) => {
+			// 	ctx.beginPath()
+			// 	ctx.fillStyle = p.color
+			// 	ctx.globalAlpha = p.opacity
+			// 	ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI)
+			// 	ctx.fill()
+			// }
 			
 			const updateParticle = (p) => {
 				p.opacity < 1
@@ -186,8 +202,23 @@ export default {
 							if (this.interactionParticle) {
 								this.interactionParticle.color = this.currColor
 							}
+							if (this.mobileInteractionParticle) {
+								this.mobileInteractionParticle.color = this.currColor
+							}
 							const p1 = this.particles[i]
 							const p2 = this.particles[j]
+							// if (!p1.active) {
+							// 	p1.color = options.particleColor
+							// }
+							// if (!p2.active) {
+							// 	p2.color = options.particleColor
+							// }
+							// if (p1.active) {
+							// 	p1.color = this.currColor
+							// }
+							// if (p2.active) {
+							// 	p2.color = this.currColor
+							// }
 							let distance = Math.min(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
 							if (distance > options.lineDistance) {
 								continue
@@ -206,32 +237,31 @@ export default {
 								continue
 							}
 							let lineColor = options.lineColor
-							if (this.interactionParticle) {
-								if (p1 === this.interactionParticle) {
+							if (this.interactionParticle || this.mobileInteractionParticle) {
+								const color = this.currColor
+								if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
 									p2.active = true
 								}
-								if (p2 === this.interactionParticle) {
+								if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
 									p1.active = true
 								}
 								if (p1.active) {
 									p2.active = true
-									p1.color = this.interactionParticle.color
-									p2.color = this.interactionParticle.color
-									lineColor = this.interactionParticle.color
+									p1.color = p2.color = lineColor = color
+									lineColor = color
 								} else {
 									p1.color = options.particleColor
 									p2.active = false
 								}
 								if (p2.active) {
 									p1.active = true
-									p2.color = this.interactionParticle.color
-									p1.color = this.interactionParticle.color
-									lineColor = this.interactionParticle.color
+									p1.color = p2.color = lineColor = color
+									lineColor = color
 								} else {
 									p2.color = options.particleColor
 									p1.active = false
 								}
-							} else {
+							} else if (p1 !== this.mobileInteractionParticle && p2 !== this.mobileInteractionParticle) {
 								p1.active = false
 								p2.active = false
 								p1.color = options.particleColor
@@ -249,7 +279,9 @@ export default {
 	
 					this.particles.forEach(particle => {
 						updateParticle(particle)
-						drawParticle(particle)
+						// if (this.interactionParticle && particle === this.interactionParticle) {
+						// 	drawParticle(particle)
+						// }
 					})
 					if (options.velocity !== 0) {
 						this.animationFrame = requestAnimationFrame(updateParticles)

@@ -22,20 +22,20 @@
 			</nav>
 		</div> -->
 		<div class="row">
-			<div class="box left">
-				<div class="lead">I'm Nigel, <br> Software Engineer</div>
+			<div class="box intro">
+				<div class="lead">I'm Nigel, <br> Web Developer</div>
 				<button class="btn">Contact Me</button>
 				<!-- <div class="vert">BOULDER COLORADO</div> -->
 			</div>
-			<div class="box right">
+			<div class="box particle">
 				<div class="title">01 PARTICLE NETWORK</div>
 				<ParticleNetwork />
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="box"></div>
 			<div class="box"></div>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -168,25 +168,18 @@ export default {
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				&.left {
-					position: relative;
-					.vert {
-						transform: rotate(270deg);
-						top: 30%;
-						right: -50px;
-						position: absolute;
-					}
-					width: 50%;
+				position: relative;
+				width: 50%;
+				&.intro {
 					padding-left: 40px;
 					.lead {
-						// margin-top: -80px;
 						font-size: 50px;
 					}
 					.btn {
 						width: 200px;;
 						z-index: 1;
 						overflow: hidden;
-						position: relative;
+						// position: relative;
 						transition: all 200ms ease;
 						text-align: center;
 						cursor: pointer;
@@ -194,46 +187,22 @@ export default {
 						background-color: transparent;
 						text-transform: uppercase;
 						font-family: 'Blender Pro';
-						letter-spacing: 2px;;
+						letter-spacing: 2px;
 						font-size: 16px;
 						margin-top: 24px;
 						color: #1d1d1d;
 						padding: 12px 36px;
-						// &:before {
-						// 	z-index: -1;
-						// 	width: 10%;
-						// 	height: 100%;
-						// 	background: #1d1d1d;
-						// 	content: "";
-						// 	position: absolute;
-						// 	left: 0%;
-						// 	top: 0%;
-						// 	transform: translate(-50%,-50%) rotate(45deg);
-						// 	transition: all 0.2s ease;
-						// }
-						// &:hover, &:focus {
-						// 	color: #fff;
-						// 	&:before {
-						// 		z-index: -1;
-						// 		width: 200%;
-						// 		height: 1000%;
-						// 	}
-						// }
 					}
 				}
-				&.right {
-					position: relative;
+				&.particle {
+					overflow: hidden;
+					background-color: #f8f8f8;
 					.title {
 						position: absolute;
 						bottom: 20%;
 						left: 10%;
 						font-size: 18px;
 					}
-					width: 50%;
-					overflow: hidden;
-					background-color: #f8f8f8;
-					// background: rgb(34,38,41);
-					// background: linear-gradient(225deg, rgba(34,38,41,1) 0%, rgba(29,29,29,1) 100%);
 				}
 			}
 		}
@@ -244,6 +213,15 @@ export default {
 				.box {
 					height: 100vh;
 					width: 100%;
+					&.left {
+						width: 100%;
+						.lead {
+							font-size: 40px;
+						}
+					}
+					&.right {
+						width: 100%;
+					}
 				}
 			}
 		}
