@@ -239,33 +239,27 @@ export default {
 							let lineColor = options.lineColor
 							if (this.interactionParticle || this.mobileInteractionParticle) {
 								const color = this.currColor
-								if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
-									p2.active = true
-								}
 								if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
 									p1.active = true
 								}
-								if (p1.active) {
+								if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
 									p2.active = true
-									p1.color = p2.color = lineColor = color
-									lineColor = color
-								} else {
-									p1.color = options.particleColor
-									p2.active = false
 								}
 								if (p2.active) {
 									p1.active = true
-									p1.color = p2.color = lineColor = color
 									lineColor = color
 								} else {
-									p2.color = options.particleColor
 									p1.active = false
+								}
+								if (p1.active) {
+									p2.active = true
+									lineColor = color
+								} else {
+									p2.active = false
 								}
 							} else if (p1 !== this.mobileInteractionParticle && p2 !== this.mobileInteractionParticle) {
 								p1.active = false
 								p2.active = false
-								p1.color = options.particleColor
-								p2.color = options.particleColor
 							}
 							ctx.beginPath()
 							ctx.strokeStyle = lineColor
