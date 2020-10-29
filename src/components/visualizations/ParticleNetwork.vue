@@ -6,14 +6,12 @@
 export default {
 	created () {
 		this.setColorSpectrum(100)
-		this.setRect()
 		window.addEventListener('resize', this.onResize)
 	},
 	data () {
 		return {
 			colorSpectrum: [],
 			canvas: undefined,
-			// totalParticles: undefined,
 			density: 20000,
 			counter: 0,
 			colorCounter: 0,
@@ -23,22 +21,14 @@ export default {
 			interactionParticle: null,
 			mobileInteractionParticle: null,
 			animationFrame: undefined,
-			width: undefined,
-			height: undefined
+			width: window.innerWidth || document.documentElement.clientWidth,
+			height: window.innerHeight || document.documentElement.clientHeight
 		}
 	},
 	mounted () {
 		this.drawChart()
 	},
 	methods: {
-		setRect () {
-			let width = window.innerWidth || document.documentElement.clientWidth
-			if (window.innerWidth > 576) {
-				width = width / 2
-			}
-			this.width = width
-			this.height = window.innerHeight || document.documentElement.clientHeight
-		},
 		setColorSpectrum (amount) {
 			// const hueDelta = Math.trunc(360 / amount)
 			const getHslaColor = (hue, saturation, lightness, alpha) => {
@@ -59,9 +49,10 @@ export default {
 			}, 100)
 		},
 		onResize () {
-			this.setRect()
+			this.width = window.innerWidth || document.documentElement.clientWidth
+			this.height = window.innerHeight || document.documentElement.clientHeight
 			const scale = window.devicePixelRatio
-			const canvas = document.querySelector('canvas')
+			const canvas = document.getElementById('particle')
 			const ctx = canvas.getContext('2d')
 			ctx.clearRect(0, 0, canvas.width, canvas.height)
 			canvas.width = Math.floor(this.width * scale)
@@ -197,18 +188,20 @@ export default {
 						from: { x: 0, y: 0 },
 						to: { x: 0, y: this.height }
 					}
-					if (this.width < 576) {
-						lineWidth = 6
+					// if (this.width < 576) {
+						lineWidth = 8
 						coords.from.x = 0
-						coords.from.y = 0
+						coords.from.y = this.height
 						coords.to.x = this.width
-						coords.to.y = 0
-					}
+						coords.to.y = this.height
+					// }
 					ctx.beginPath()
 					ctx.strokeStyle = this.currColor
 					ctx.lineWidth = lineWidth
 					ctx.moveTo(coords.from.x, coords.from.y)
 					ctx.lineTo(coords.to.x, coords.to.y)
+					ctx.moveTo(0, 0)
+					ctx.lineTo(this.width, 0)
 					ctx.stroke()
 					for (let i = 0; i < this.particles.length; i++) {
 						for (let j = this.particles.length - 1; j > i; j--) {

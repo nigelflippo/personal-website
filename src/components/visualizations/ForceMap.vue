@@ -3,7 +3,7 @@
 </template>
 <script>
 import * as d3 from 'd3'
-import elegansData from '@/data/elegans-3-copy.json'
+import elegansData from '@/data/elegans.json'
 
 export default {
 	created () {
