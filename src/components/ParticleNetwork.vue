@@ -5,7 +5,7 @@
 
 export default {
 	created () {
-		this.setColorSpectrum(60)
+		this.setColorSpectrum(100)
 		this.setRect()
 		window.addEventListener('resize', this.onResize)
 	},
@@ -13,8 +13,8 @@ export default {
 		return {
 			colorSpectrum: [],
 			canvas: undefined,
-			totalParticles: undefined,
-			density: 15000,
+			// totalParticles: undefined,
+			density: 20000,
 			counter: 0,
 			colorCounter: 0,
 			interval: null,
@@ -40,21 +40,23 @@ export default {
 			this.height = window.innerHeight || document.documentElement.clientHeight
 		},
 		setColorSpectrum (amount) {
-			const hueDelta = Math.trunc(360 / amount)
+			// const hueDelta = Math.trunc(360 / amount)
 			const getHslaColor = (hue, saturation, lightness, alpha) => {
 				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
 			}
 			for (let i = 0; i < amount; i++) {
-				const hue = i * hueDelta
+				// const hue = i * hueDelta
+				const hue = Math.floor(i / amount * 100) + 100 
 				const saturation = 100
-				const lightness = 45
+				const lightness = 50
 				const alpha = 1.0
 				this.colorSpectrum.push(getHslaColor(hue, saturation, lightness, alpha))
 			}
+			this.colorSpectrum = [...this.colorSpectrum, ...this.colorSpectrum.reverse()]
 			this.colorInterval = setInterval(() => {
 				this.currColor = this.colorSpectrum[this.colorCounter]
 				this.colorCounter = (this.colorCounter + 1) % this.colorSpectrum.length
-			}, 250)
+			}, 100)
 		},
 		onResize () {
 			this.setRect()
@@ -117,6 +119,7 @@ export default {
 			const onMouseDown = () => {
 				this.mobileInteractionParticle = initParticle(this.interactionParticle.x, this.interactionParticle.y, true)
 				this.particles.push(this.mobileInteractionParticle)
+				// start mobile particle removal countdown
 			}
 
 			canvas.addEventListener('mousemove', onMouseMove)
@@ -169,14 +172,6 @@ export default {
 				}
 			}
 			createParticles()
-
-			// const drawParticle = (p) => {
-			// 	ctx.beginPath()
-			// 	ctx.fillStyle = p.color
-			// 	ctx.globalAlpha = p.opacity
-			// 	ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI)
-			// 	ctx.fill()
-			// }
 			
 			const updateParticle = (p) => {
 				p.opacity < 1
@@ -197,85 +192,80 @@ export default {
 					ctx.clearRect(0, 0, this.width, this.height)
 					ctx.globalAlpha = 1
 
+					let lineWidth = 4
+					let coords = {
+						from: { x: 0, y: 0 },
+						to: { x: 0, y: this.height }
+					}
+					if (this.width < 576) {
+						lineWidth = 6
+						coords.from.x = 0
+						coords.from.y = 0
+						coords.to.x = this.width
+						coords.to.y = 0
+					}
+					ctx.beginPath()
+					ctx.strokeStyle = this.currColor
+					ctx.lineWidth = lineWidth
+					ctx.moveTo(coords.from.x, coords.from.y)
+					ctx.lineTo(coords.to.x, coords.to.y)
+					ctx.stroke()
 					for (let i = 0; i < this.particles.length; i++) {
 						for (let j = this.particles.length - 1; j > i; j--) {
-							if (this.interactionParticle) {
-								this.interactionParticle.color = this.currColor
-							}
-							if (this.mobileInteractionParticle) {
-								this.mobileInteractionParticle.color = this.currColor
-							}
 							const p1 = this.particles[i]
 							const p2 = this.particles[j]
-							// if (!p1.active) {
-							// 	p1.color = options.particleColor
-							// }
-							// if (!p2.active) {
-							// 	p2.color = options.particleColor
-							// }
-							// if (p1.active) {
-							// 	p1.color = this.currColor
-							// }
-							// if (p2.active) {
-							// 	p2.color = this.currColor
-							// }
-							let distance = Math.min(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
-							if (distance > options.lineDistance) {
-								continue
-							}
-							distance = Math.sqrt(
-								Math.pow(p1.x - p2.x, 2) +
-								Math.pow(p1.y - p2.y, 2)
+							const dx = p1.x - p2.x
+							const dy = p1.y - p2.y
+							const distance = Math.sqrt(
+								Math.pow(dx, 2) +
+								Math.pow(dy, 2)
 							)
-							if (distance > options.lineDistance) {
-								if (p1 === this.interactionParticle) {
-									p2.active = false
-								}
-								if (p2 === this.interactionParticle) {
-									p1.active = false
-								}
-								continue
-							}
 							let lineColor = options.lineColor
-							if (this.interactionParticle || this.mobileInteractionParticle) {
+							if (distance < options.lineDistance) {
 								const color = this.currColor
-								if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
-									p1.active = true
-								}
-								if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
-									p2.active = true
-								}
-								if (p2.active) {
-									p1.active = true
-									lineColor = color
+								if (this.interactionParticle || this.mobileInteractionParticle) {
+									if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
+										lineColor = color
+										p1.active = true
+									}
+									if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
+										lineColor = color
+										p2.active = true
+									}
+									if (p1.active && !p2.active) {
+										p2.active = true
+										lineColor = color
+									} else if (!p1.active && p2.active) {
+										p1.active = true
+										lineColor = color
+									} else if (p1.active && p2.active) {
+										lineColor = color
+									}
 								} else {
 									p1.active = false
+									p2.active = false
+									lineColor = options.lineColor
 								}
-								if (p1.active) {
-									p2.active = true
-									lineColor = color
-								} else {
+								ctx.beginPath()
+								ctx.strokeStyle = lineColor
+								ctx.globalAlpha = (options.lineDistance - distance) / options.lineDistance * p1.opacity * p2.opacity
+								ctx.lineWidth = 1
+								ctx.moveTo(p1.x, p1.y)
+								ctx.lineTo(p2.x, p2.y)
+								ctx.stroke()
+							} else {
+								if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
 									p2.active = false
 								}
-							} else if (p1 !== this.mobileInteractionParticle && p2 !== this.mobileInteractionParticle) {
-								p1.active = false
-								p2.active = false
+								if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
+									p1.active = false
+								}
 							}
-							ctx.beginPath()
-							ctx.strokeStyle = lineColor
-							ctx.globalAlpha = (options.lineDistance - distance) / options.lineDistance * p1.opacity * p2.opacity
-							ctx.lineWidth = 0.8
-							ctx.moveTo(p1.x, p1.y)
-							ctx.lineTo(p2.x, p2.y)
-							ctx.stroke()
 						}
 					}
 	
 					this.particles.forEach(particle => {
 						updateParticle(particle)
-						// if (this.interactionParticle && particle === this.interactionParticle) {
-						// 	drawParticle(particle)
-						// }
 					})
 					if (options.velocity !== 0) {
 						this.animationFrame = requestAnimationFrame(updateParticles)
