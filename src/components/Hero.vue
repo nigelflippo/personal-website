@@ -41,24 +41,14 @@ export default {
 			left: 10%;
 			position: absolute;
 		}
-		// .wrapper-text {
-		// 	padding-left: 10%;
-		// 	width: 100%;
-		// 	margin: auto;
-		// }
-		// .wrapper-animation {
-		// 	overflow: hidden;
-		// 	background-color: #f8f8f8;
-		// 	.animation-label {
-		// 		bottom: 15%;
-		// 		left: 10%;
-		// 	}
-		// 	#particle {
-		// 		opacity: 1;
-		// 		height: 100%;
-		// 		width: 100%;
-		// 	}
-		// }
+		.column {
+			min-height: none;
+		}
+		#particle {
+			min-height: 100vh;
+			height: 100%;
+			width: 100%;
+		}
 		.lead {
 			line-height: 1.2;
 			font-size: 60px;

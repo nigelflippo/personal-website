@@ -128,7 +128,7 @@ export default {
 			}
 		}
 
-		@media (max-width: 576px) {
+		@media (max-width: 900px) {
 			.section {
 				flex-direction: column;
 				.column {

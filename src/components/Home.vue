@@ -36,44 +36,55 @@ export default {
 <style lang="scss">
 	#home {
 		overflow: hidden;
+		#particle {
+			height: 100%;
+			width: 100%;
+		}
+		.column {
+			position: relative;
+			min-height: 0;
+		}
 		.lead-wrapper {
 			margin-top: -100px;
 			top: 50%;
-			left: 10%;
+			left: 5%;
 			position: absolute;
-		}
-		.lead {
-			line-height: 1.2;
-			font-size: 64px;
-		}
-		.btn {
-			width: 200px;
-			z-index: 1;
-			overflow: hidden;
-			transition: all 200ms ease;
-			text-align: center;
-			cursor: pointer;
-			border: 3px solid #333234;
-			background-color: transparent;
-			text-transform: uppercase;
-			font-family: 'Blender Pro';
-			letter-spacing: 2px;
-			font-size: 16px;
-			margin-top: 24px;
-			color: #333234;
-			padding: 12px 36px;
-			&:hover {
-				background-color: #333234;
-				color: #f1f1f1;
+			.lead {
+				line-height: 1.2;
+				font-size: 60px;
+			}
+			.btn {
+				width: 200px;
+				z-index: 1;
+				overflow: hidden;
+				transition: all 200ms ease;
+				text-align: center;
+				cursor: pointer;
+				border: 3px solid #333234;
+				background-color: transparent;
+				text-transform: uppercase;
+				font-family: 'Blender Pro';
+				letter-spacing: 2px;
+				font-size: 16px;
+				margin-top: 24px;
+				color: #333234;
+				padding: 12px 36px;
+				&:hover {
+					background-color: #333234;
+					color: #f1f1f1;
+				}
 			}
 		}
 		@media (max-width: 576px) {
-			.lead {
-				font-size: 46px;
-			}
-			.btn {
-				padding: 10px 32px;
-				width: 180px;
+			.lead-wrapper {
+				left: 10%;
+				.lead {
+					font-size: 46px;
+				}
+				.btn {
+					padding: 10px 32px;
+					width: 180px;
+				}
 			}
 		}
 	}
