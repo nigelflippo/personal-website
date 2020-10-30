@@ -62,7 +62,7 @@ export default {
 		box-sizing: inherit;
 	}
 	.slide-enter-active, .slide-leave-active {
-		transition: opacity 0.6s ease;
+		transition: opacity 0.3s ease;
 	}
 	.slide-enter {
 		opacity: 0;

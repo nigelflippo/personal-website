@@ -2,16 +2,12 @@
 	<div>
 		<section id="home" class="section">
 			<div class="logo">\N\</div>
-			<div class="column column-vh">
 				<div class="lead-wrapper">
 					<div class="lead">I'm Nigel, <br> Web Developer</div>
 					<button class="btn">Contact Me</button>
 				</div>
-			</div>
-			<div class="column column-vh bg-white-2">
 				<ParticleNetwork />
 				<div class="label animation-label animation-label-right">01a PARTICLE NETWORK</div>
-			</div>
 		</section>
 		<Hello />
 		<Who />
@@ -35,11 +31,13 @@ export default {
 </script>
 <style lang="scss">
 	#home {
+		background-color: #f8f8f8;
+		// height: 100%;
 		overflow: hidden;
-		#particle {
-			height: 100%;
-			width: 100%;
-		}
+		// #particle {
+		// 	height: 100%;
+		// 	width: 100%;
+		// }
 		.column {
 			position: relative;
 			min-height: 0;
@@ -79,11 +77,13 @@ export default {
 			.lead-wrapper {
 				left: 10%;
 				.lead {
-					font-size: 46px;
+					font-size: 42px;
 				}
 				.btn {
-					padding: 10px 32px;
-					width: 180px;
+					margin-top: 14px;
+					font-size: 14px;
+					padding: 8px 24px;
+					width: 160px;
 				}
 			}
 		}

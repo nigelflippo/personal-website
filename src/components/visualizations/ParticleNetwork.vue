@@ -22,7 +22,7 @@ export default {
 			mobileInteractionParticle: null,
 			animationFrame: undefined,
 			width: window.innerWidth || document.documentElement.clientWidth,
-			height: window.outerHeight || document.documentElement.clientHeight
+			height: window.innerHeight || document.documentElement.clientHeight
 		}
 	},
 	mounted () {
@@ -49,8 +49,9 @@ export default {
 			}, 100)
 		},
 		onResize () {
+			console.log('hey')
 			this.width = window.innerWidth || document.documentElement.clientWidth
-			this.height = window.outerHeight || document.documentElement.clientHeight
+			this.height = window.innerHeight || document.documentElement.clientHeight
 			const scale = window.devicePixelRatio
 			const canvas = document.getElementById('particle')
 			const ctx = canvas.getContext('2d')
@@ -189,19 +190,19 @@ export default {
 						to: { x: 0, y: this.height }
 					}
 					// if (this.width < 576) {
-					// 	lineWidth = 8
-					// 	coords.from.x = 0
-					// 	coords.from.y = this.height
-					// 	coords.to.x = this.width
-					// 	coords.to.y = this.height
+						lineWidth = 8
+						coords.from.x = 0
+						coords.from.y = this.height
+						coords.to.x = this.width
+						coords.to.y = this.height
 					// }
 					ctx.beginPath()
 					ctx.strokeStyle = this.currColor
 					ctx.lineWidth = lineWidth
 					ctx.moveTo(coords.from.x, coords.from.y)
 					ctx.lineTo(coords.to.x, coords.to.y)
-					// ctx.moveTo(0, 0)
-					// ctx.lineTo(this.width, 0)
+					ctx.moveTo(0, 0)
+					ctx.lineTo(this.width, 0)
 					ctx.stroke()
 					for (let i = 0; i < this.particles.length; i++) {
 						for (let j = this.particles.length - 1; j > i; j--) {
