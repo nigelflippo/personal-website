@@ -1,5 +1,5 @@
 <template>
-	<canvas id="particle" :style="`width: ${width}px; height: ${height}px`"></canvas>
+	<canvas id="particle" :style="`width: ${width}px; height: ${height}px;`"></canvas>
 </template>
 <script>
 

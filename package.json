@@ -13,7 +13,9 @@
     "d3": "^6.2.0",
     "d3-drag": "^2.0.0",
     "d3-force": "^2.1.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.4.8",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -53,9 +53,7 @@ export default {
 		handleToggle () {
 			this.toggled = !this.toggled
 		},
-		handleLink (id) {
-			window.location.hash = ''
-			window.location.hash = id
+		handleLink () {
 			this.handleToggle()
 		}
 	}
@@ -99,8 +97,8 @@ export default {
 		position: fixed;
 		top: 20px;
 		right: 20px;
-		height: 50px;
-		width: 50px;
+		height: 48px;
+		width: 48px;
 		display: flex;
 		justify-content: center;
 		align-items: center;

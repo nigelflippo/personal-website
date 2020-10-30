@@ -1,13 +1,13 @@
 <template>
-		<section id="home" class="section">
+		<!-- <section id="home" class="section">
 			<div class="lead-wrapper">
 				<div class="lead">I'm Nigel, <br> Web Developer</div>
 				<button class="btn">Contact Me</button>
 			</div>
 			<ParticleNetwork />
 			<div class="label animation-label animation-label-right">01a PARTICLE NETWORK</div>
-		</section>
-		<!-- <section id="hero" class="section">
+		</section> -->
+		<section id="home" class="section">
 			<div class="column">
 				<div class="wrapper wrapper-text">
 					<div class="lead">I'm Nigel, <br> Web Developer</div>
@@ -20,7 +20,7 @@
 					<ParticleNetwork />
 				</div>
 			</div>
-		</section> -->
+		</section>
 </template>
 <script>
 import ParticleNetwork from '@/components/visualizations/ParticleNetwork.vue'

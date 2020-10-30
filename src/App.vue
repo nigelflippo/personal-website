@@ -1,28 +1,26 @@
 <template>
 	<div class="app-container">
-		<div class="logo">\N\</div>
 		<Nav />
-		<Hero />
-		<Hello />
-		<Who />
-		<What />
+		<transition name="slide" mode="out-in">
+			<Loader v-if="isLoading" />
+			<router-view v-else></router-view>
+		</transition>
 	</div>
 </template>
 <script>
+import Loader from '@/components/Loader'
 import Nav from '@/components/Nav.vue'
-import Hero from '@/components/Hero.vue'
-import Hello from '@/components/Hello.vue'
-import Who from '@/components/Who.vue'
-import What from '@/components/What.vue'
 
+import { mapGetters } from 'vuex'
 export default {
-	name: 'App',
 	components: {
-		Nav,
-		Hero,
-		Hello,
-		Who,
-		What
+		Loader,
+		Nav
+	},
+	computed: {
+		...mapGetters([
+			'isLoading'
+		])
 	}
 }
 </script>
@@ -63,25 +61,39 @@ export default {
 	*, *:before, *:after {
 		box-sizing: inherit;
 	}
-
+	.slide-enter-active, .slide-leave-active {
+		transition: opacity 0.6s ease;
+	}
+	.slide-enter {
+		opacity: 0;
+	}
+	.slide-leave-to {
+		opacity: 0;
+	}
 	.app-container {
 		display: flex;
 		flex-direction: column;
 		font-family: 'Blender Pro';
+		.bg-white-2 {
+			background-color: #f8f8f8;
+		}
 		.logo {
 			position: absolute;
-			top: 20px;
-			left: 20px;
+			top: 15px;
+			left: 15px;
 			font-size: 44px;
 		}
 		.section {
-			position: relative;
 			display: flex;
 			width: 100%;
 			.column {
 				display: flex;
 				width: 50%;
 				min-height: 50vw;
+				height: 100%;
+				&-vh {
+					height: 100vh;
+				}
 			}
 			.wrapper {
 				position: relative;
@@ -111,21 +123,23 @@ export default {
 				}
 			}
 			.description {
-				font-size: 18px;
+				font-size: 20px;
 				line-height: 1.8;
 			}
 		}
 
 		@media (max-width: 576px) {
 			.section {
-				height: 200vw;
 				flex-direction: column;
 				.column {
 					width: 100%;
 					min-height: 100vw;
 				}
 				.label {
-					font-size: 18px;
+					font-size: 16px;
+					&.animation-label {
+						bottom: 5%;
+					}
 				}
 				.description {
 					font-size: 16px;
