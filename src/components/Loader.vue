@@ -16,6 +16,7 @@ export default {
 </script>
 <style lang="scss">
 	.loader-container {
+		overflow: hidden;
 		height: 100vh;
 		width: 100%;
 		background-color: rgba(24,24,24,1);
@@ -25,11 +26,13 @@ export default {
 		align-items: center;
 		z-index: 102;
 		.bar {
+			border-radius: 4px;
 			height: 4px;
 			width: 60%;
 			background-color: #666;
 			overflow: hidden;
 			.bar-overlay {
+				border-radius: 4px;
 				height: 100%;
 				width: 100%;
 				background-color: #f1f1f1;

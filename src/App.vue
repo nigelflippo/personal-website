@@ -62,7 +62,7 @@ export default {
 		box-sizing: inherit;
 	}
 	.slide-enter-active, .slide-leave-active {
-		transition: opacity 0.3s ease;
+		transition: opacity 0.4s ease;
 	}
 	.slide-enter {
 		opacity: 0;
@@ -71,29 +71,22 @@ export default {
 		opacity: 0;
 	}
 	.app-container {
-		display: flex;
-		flex-direction: column;
+		// display: flex;
+		// flex-direction: column;
 		font-family: 'Blender Pro';
 		.bg-white-2 {
 			background-color: #f8f8f8;
 		}
-		.logo {
-			position: absolute;
-			top: 15px;
-			left: 15px;
-			font-size: 44px;
-		}
 		.section {
 			display: flex;
-			width: 100%;
+			// width: 100%;
 			.column {
+				justify-content: center;
+				align-items: center;
 				display: flex;
 				width: 50%;
 				min-height: 50vw;
 				height: 100%;
-				&-vh {
-					height: 100vh;
-				}
 			}
 			.wrapper {
 				position: relative;
@@ -102,6 +95,9 @@ export default {
 			.wrapper-text {
 				padding: 5% 20%;
 				margin: auto;
+			}
+			.wrapper-animation {
+				background-color: #f1f1f1;
 			}
 			.label {
 				font-family: 'Blender Pro';

@@ -8,6 +8,7 @@
 			</div>
 		</div>
 		<div class="overlay" :class="{ 'toggled': toggled }">
+			<div class="logo">\N\</div>
 			<nav class="nav">
 				<ol class="nav-group">
 					<li v-for="({ name, id }, index) in sections" :key="index">
@@ -32,19 +33,19 @@ export default {
 				},
 				{
 					id: 'hello',
-					name: '01b HELLO'
+					name: '01 HELLO'
 				},
 				{
 					id: 'who',
-					name: '02b WHO'
+					name: '02 WHO'
 				},
 				{
 					id: 'what',
-					name: '03b WHAT'
+					name: '03 WHAT'
 				},
 				{
 					id: 'why',
-					name: '04b WHY'
+					name: '04 WHY'
 				}
 			]
 		}
@@ -68,6 +69,12 @@ export default {
 		background-color: #1d1d1d;
 		transform: translateX(100%);
 		transition: transform 0.3s ease;
+		.logo {
+			left: 50px;
+			position: absolute;
+			font-size: 72px;
+			color: #fff;
+		}
 		&.toggled {
 			transform: translateX(0);
 		}
@@ -76,8 +83,8 @@ export default {
 			height: 100%;
 			.nav-group {
 				padding: 0;
-				margin: auto;
-				font-size: 45px;
+				margin: auto 50px;
+				font-size: 72px;
 				list-style: none;
 				color: #fff;
 				li {
@@ -90,8 +97,18 @@ export default {
 				}
 			}
 		}
+		@media screen and (max-width: 576px) {
+			.logo {
+				top: 20px;
+				font-size: 42px;
+			}
+			.nav .nav-group {
+				font-size: 42px;
+			}
+		}
 	}
 	.menu-container {
+		border-radius: 3px;
 		cursor: pointer;
 		z-index: 102;
 		position: fixed;
@@ -116,6 +133,7 @@ export default {
 				}
 			}
 			.bar {
+				border-radius: 2px;
 				width: 24px;
 				height: 3px;
 				background-color: #fff;

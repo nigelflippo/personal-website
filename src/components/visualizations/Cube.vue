@@ -17,7 +17,7 @@
 		top: 50%;
 		left: 50%;
 		position: absolute;
-		perspective: 1000px;
+		perspective: 100000px;
 		.cube {
 			@function hslColor($hue: 0, $saturation: 70%, $lightness: 70%) {
 				@return hsl($hue, $saturation, $lightness);
@@ -34,7 +34,7 @@
 			}
 			transform-style: preserve-3d;
 			transition: all 0.4s ease;
-			animation: rotatecube 20s infinite;
+			animation: rotatecube 16s infinite;
 			animation-play-state: running;
 			transform: rotateX(50deg) rotateY(50deg);
 			--size: 160px;

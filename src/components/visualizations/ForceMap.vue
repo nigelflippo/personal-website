@@ -82,7 +82,7 @@ export default {
 			const resize = () => {
 				let PIXEL_RATIO = window.devicePixelRatio
 				let chartRect = (window.innerWidth || document.documentElement.clientWidth) / 2
-				if (window.innerWidth < 576) {
+				if (window.innerWidth < 900) {
 					chartRect = window.innerWidth || document.documentElement.clientWidth
 				}
 				this.chartRect = chartRect
