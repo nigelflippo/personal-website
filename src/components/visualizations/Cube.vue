@@ -14,9 +14,9 @@
 	#cube-wrapper {
 		height: 200px;
 		width: 200px;
-		top: 50%;
-		left: 50%;
-		position: absolute;
+		// top: 50%;
+		// left: 50%;
+		// position: absolute;
 		perspective: 100000px;
 		.cube {
 			@function hslColor($hue: 0, $saturation: 70%, $lightness: 70%) {
@@ -37,7 +37,7 @@
 			animation: rotatecube 16s infinite;
 			animation-play-state: running;
 			transform: rotateX(50deg) rotateY(50deg);
-			--size: 160px;
+			--size: 120px;
 			width: var(--size);
 			height: var(--size);
 		}

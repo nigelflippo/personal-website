@@ -1,13 +1,13 @@
 <template>
 	<div class="nav-container">
 		<div class="menu-container" @click="handleToggle" >
-			<div class="hamburger" :class="{ 'toggled': toggled }">
+			<div class="hamburger" :class="{ 'toggled': isToggled }">
 				<div class="bar bar-one"></div>
 				<div class="bar bar-two"></div>
 				<div class="bar bar-three"></div>
 			</div>
 		</div>
-		<div class="overlay" :class="{ 'toggled': toggled }">
+		<div class="overlay" :class="{ 'toggled': isToggled }">
 			<div class="logo">\N\</div>
 			<nav class="nav">
 				<ol class="nav-group">
@@ -22,10 +22,27 @@
 	</div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
+	created () {
+		const hash = window.location.hash
+		console.log(hash)
+		if (hash) {
+			this.$nextTick(() => {
+				const el = document.querySelector(hash).scrollIntoView()
+				if (el) {
+					el.scrollIntoView()
+				}
+			})
+		}
+	},
+	computed: {
+		...mapGetters([
+			'isToggled'
+		])
+	},
 	data () {
 		return {
-			toggled: false,
 			sections: [
 				{
 					id: 'home',
@@ -51,16 +68,24 @@ export default {
 		}
 	},
 	methods: {
+		...mapActions([
+			'setIsToggled'
+		]),
 		handleToggle () {
 			this.toggled = !this.toggled
+			this.setIsToggled(this.toggled)
 		},
-		handleLink () {
+		handleLink (hash) {
 			this.handleToggle()
+			window.location.hash = `#${hash}`
 		}
 	}
 }
 </script>
 <style lang="scss">
+	.nav-container {
+		position: relative;
+	}
 	.overlay {
 		z-index: 101;
 		position: fixed;
@@ -72,8 +97,8 @@ export default {
 		.logo {
 			left: 50px;
 			position: absolute;
-			font-size: 72px;
-			color: #fff;
+			font-size: 64px;
+			color: #f1f1f1;
 		}
 		&.toggled {
 			transform: translateX(0);
@@ -84,9 +109,9 @@ export default {
 			.nav-group {
 				padding: 0;
 				margin: auto 50px;
-				font-size: 72px;
+				font-size: 64px;
 				list-style: none;
-				color: #fff;
+				color: #f1f1f1;
 				li {
 					transition: color 0.3s ease;
 					cursor: pointer;
@@ -108,6 +133,7 @@ export default {
 		}
 	}
 	.menu-container {
+		z-index: 101;
 		border-radius: 3px;
 		cursor: pointer;
 		z-index: 102;

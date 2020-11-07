@@ -10,8 +10,8 @@ export default {
 	},
 	data () {
 		return {
-			isTouchMoving: false,
-			isMouseDown: false,
+			// isTouchMoving: false,
+			// isMouseDown: false,
 			colorSpectrum: [],
 			canvas: undefined,
 			density: 20000,
@@ -35,7 +35,7 @@ export default {
 				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
 			}
 			for (let i = 0; i < amount; i++) {
-				const hue = Math.floor(i / amount * 100) + 300 
+				const hue = Math.floor(i / amount * 200) + 140
 				const saturation = 70
 				const lightness = 70
 				const alpha = 1.0
@@ -96,27 +96,28 @@ export default {
 				this.interactionParticle.x = e.offsetX
 				this.interactionParticle.y = e.offsetY
 			}
-			const onTouchStart = e => {
-				if (!this.isTouchMoving) {
-					const particle = initParticle(e.changedTouches[0].clientX, e.changedTouches[0].clientY)
-					this.particles.push(particle)
-				}
-			}
-			const onTouchMove = e => {
-				this.isTouchMoving = true
-				if (!this.interactionParticle) {
-					createInteractionParticle(e)
-				}
-				this.interactionParticle.x = e.changedTouches[0].clientX
-				this.interactionParticle.y = e.changedTouches[0].clientY
-			}
-			const onTouchEnd = () => {
-				this.isTouchMoving = false
-				this.isMouseDown = false
-				removeInteractionParticle()
-			}
+			// const onTouchStart = e => {
+			// 	if (!this.isTouchMoving) {
+			// 		const particle = initParticle(e.changedTouches[0].clientX, e.changedTouches[0].clientY)
+			// 		this.particles.push(particle)
+			// 	}
+			// }
+			// const onTouchMove = e => {
+			// 	this.isTouchMoving = true
+			// 	if (!this.interactionParticle) {
+			// 		createInteractionParticle(e)
+			// 	}
+			// 	this.interactionParticle.x = e.changedTouches[0].clientX
+			// 	this.interactionParticle.y = e.changedTouches[0].clientY
+			// }
+			// const onTouchEnd = () => {
+			// 	this.isTouchMoving = false
+			// 	this.isMouseDown = false
+			// 	removeInteractionParticle()
+			// }
 			const onMouseUp = () => {
 				this.isMouseDown = false
+				removeInteractionParticle()
 			}
 			const onMouseDown = () => {
 				this.isMouseDown = true
@@ -128,9 +129,9 @@ export default {
 
 			canvas.addEventListener('mousemove', onMouseMove)
 			canvas.addEventListener('mouseout', removeInteractionParticle)
-			canvas.addEventListener('touchstart', onTouchStart)
-			canvas.addEventListener('touchmove', onTouchMove)
-			canvas.addEventListener('touchend', onTouchEnd)
+			// canvas.addEventListener('touchstart', onTouchStart)
+			// canvas.addEventListener('touchmove', onTouchMove)
+			// canvas.addEventListener('touchend', onTouchEnd)
 			canvas.addEventListener('mousedown', onMouseDown)
 			canvas.addEventListener('mouseup', onMouseUp)
 

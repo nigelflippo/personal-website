@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script>
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-	    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=fallback" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400&display=fallback" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,viewport-fit=cover">
+    <meta name="og:locale" content="en_US">
+    <meta name="og:type" content="website">
+    <meta name="author" content="Nigel Flippo">
+    <meta name="theme-color" content="#333">
+    <meta name="title" content="Nigel Flippo | Software Developer">
+    <meta name="description" content="Developer Portfolio">
+    <meta name="image" content="<%= BASE_URL %>/favicon.ico">
+    <meta property="og:title" content="Nigel Flippo | Software Developer">
+    <meta property="og:description" content="Developer Portfolio">
+    <meta property="og:image" content="<%= BASE_URL %>/favicon.ico">
+    <meta property="og:url" content="https://nigelflippo.com">
+    <meta name="og:site_name" content="Nigel Flippo | Software Developer">
+    <meta name="msapplication-TileColor" content="#333">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Nigel Flippo | Software Developer">
+    <meta name="twitter:description" content="Developer Portfolio">
+    <meta name="twitter:site" content="https://nigelflippo.com">
+    <meta name="twitter:image" content="https://nigelflippo.com/favicon.ico">
 
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Book.eot') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Book.woff2') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Book.woff2') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Book.ttf') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Medium.eot') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Medium.woff2') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Medium.woff2') %>" as="font" crossorigin>
+    <link rel="preload" href="<%= require('@/fonts/blenderpro/BlenderPro-Medium.ttf') %>" as="font" crossorigin>
+
+    <title>Nigel Flippo</title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but nigelflippo.com doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

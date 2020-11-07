@@ -1,30 +1,49 @@
 <template>
-	<div class="app-container">
-		<Nav />
-		<transition name="slide" mode="out-in">
-			<Loader v-if="isLoading" />
-			<router-view v-else></router-view>
-		</transition>
-	</div>
+	<transition name="fade" mode="out-in">
+		<Loader v-if="isLoading" />
+		<div v-else class="app-container">
+			<Nav />
+			<div class="inner-container" :class="{ 'menu-out': isToggled }">
+				<Home />
+			</div>
+		</div>
+	</transition>
 </template>
 <script>
 import Loader from '@/components/Loader'
 import Nav from '@/components/Nav.vue'
+import Home from '@/components/Home.vue'
+// import CircleAnimation from '@/components/visualizations/CircleAnimation.vue'
 
 import { mapGetters } from 'vuex'
 export default {
 	components: {
 		Loader,
-		Nav
+		Nav,
+		Home,
+		// CircleAnimation
 	},
 	computed: {
 		...mapGetters([
-			'isLoading'
+			// 'isLoading',
+			'isToggled'
 		])
+	},
+	created () {
+		setTimeout(() => {
+			this.isLoading = false
+		}, 1500)
+	},
+	data () {
+		return {
+			isLoading: true
+		}
 	}
 }
 </script>
 <style lang="scss">
+	@import '@/styles/layout.scss';
+	@import '@/styles/buttons.scss';
 	@font-face {
 		font-family: 'Blender Pro Book';
 		src: url('./fonts/blenderpro/BlenderPro-Book.eot');
@@ -53,6 +72,7 @@ export default {
 		width: 100%;
 	}
 	body {
+		overflow-x: hidden;
 		height: 100vh;
 		width: 100%;
 		margin: 0;
@@ -61,85 +81,56 @@ export default {
 	*, *:before, *:after {
 		box-sizing: inherit;
 	}
-	.slide-enter-active, .slide-leave-active {
+	.fade-enter-active, .fade-leave-active {
 		transition: opacity 0.4s ease;
 	}
-	.slide-enter {
+	.fade-enter {
 		opacity: 0;
 	}
-	.slide-leave-to {
+	.fade-leave-to {
 		opacity: 0;
 	}
 	.app-container {
-		// display: flex;
-		// flex-direction: column;
 		font-family: 'Blender Pro';
-		.bg-white-2 {
-			background-color: #f8f8f8;
+		.inner-container {
+			transition: all 0.4s ease;
+			transform: translateX(0);
+			&.menu-out {
+				transform: translateX(-20%);
+			}
 		}
-		.section {
-			display: flex;
-			// width: 100%;
-			.column {
-				justify-content: center;
-				align-items: center;
-				display: flex;
-				width: 50%;
-				min-height: 50vw;
-				height: 100%;
+		.label {
+			font-family: 'Blender Pro';
+			font-size: 20px;
+			&.description-label {
+				margin-bottom: 12px;
 			}
-			.wrapper {
-				position: relative;
-				width: 100%;
-			}
-			.wrapper-text {
-				padding: 5% 20%;
-				margin: auto;
-			}
-			.wrapper-animation {
-				background-color: #f1f1f1;
-			}
-			.label {
-				font-family: 'Blender Pro';
-				font-size: 20px;
-				&.description-label {
-					margin-bottom: 12px;
+			&.animation-label {
+				cursor: pointer;
+				position: absolute;
+				bottom: 10%;
+				z-index: 100;
+				&-left {
+					left: 10%;
 				}
+				&-right {
+					right: 10%;
+				}
+			}
+		}
+		.description {
+			font-size: 20px;
+			line-height: 1.8;
+		}
+		@media (max-width: 900px) {
+			.label {
+				font-size: 16px;
 				&.animation-label {
-					cursor: pointer;
-					position: absolute;
-					bottom: 10%;
-					z-index: 100;
-					&-left {
-						left: 10%;
-					}
-					&-right {
-						right: 10%;
-					}
+					bottom: 5%;
 				}
 			}
 			.description {
-				font-size: 20px;
-				line-height: 1.8;
-			}
-		}
-
-		@media (max-width: 900px) {
-			.section {
-				flex-direction: column;
-				.column {
-					width: 100%;
-					min-height: 100vw;
-				}
-				.label {
-					font-size: 16px;
-					&.animation-label {
-						bottom: 5%;
-					}
-				}
-				.description {
-					font-size: 16px;
-				}
+				font-size: 16px;
 			}
 		}
 	}

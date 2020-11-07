@@ -9,7 +9,7 @@ Vue.use(Router)
 const router = new Router({
 	routes: [
 		{
-			path: '/',
+			path: '',
 			name: 'Home',
 			component: Home
 		}
@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
 	next()
 })
 router.afterEach(() => {
-	setTimeout(() => store.dispatch('setIsLoading', false), 1500)
+	setTimeout(() => store.dispatch('setIsLoading', false), 1800)
 })
 
 export default router

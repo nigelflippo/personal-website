@@ -6,11 +6,13 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		isPageScrolled: false,
-		isLoading: false
+		isLoading: false,
+		isToggled: false
 	},
 	getters: {
 		isPageScrolled: state => state.isPageScrolled,
-		isLoading: state => state.isLoading
+		isLoading: state => state.isLoading,
+		isToggled: state => state.isToggled
 	},
 	mutations: {
 		setPageScrolled (state, isPageScrolled) {
@@ -18,6 +20,9 @@ const store = new Vuex.Store({
 		},
 		setIsLoading (state, isLoading) {
 			state.isLoading = isLoading
+		},
+		setIsToggled (state, isToggled) {
+			state.isToggled = isToggled
 		}
 	},
 	actions: {
@@ -26,6 +31,9 @@ const store = new Vuex.Store({
 		},
 		setIsLoading ({ commit }, isLoading) {
 			commit('setIsLoading', isLoading)
+		},
+		setIsToggled ({ commit }, isToggled) {
+			commit('setIsToggled', isToggled)
 		}
 	}
 })
