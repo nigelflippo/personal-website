@@ -26,8 +26,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
 	created () {
 		const hash = window.location.hash
-		console.log(hash)
-		if (hash) {
+		if (hash && hash !== '#/') {
 			this.$nextTick(() => {
 				const el = document.querySelector(hash).scrollIntoView()
 				if (el) {

@@ -22,7 +22,7 @@
 					<div>
 						<div class="label description-label">01b HELLO</div>
 						<div class="description">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+							<p>A software engineer based in Boulder, Colorado. I've created an assembly of interactive widgets that I hope you'll enoy engaging with.</p>
 						</div>
 					</div>
 				</div>
@@ -40,7 +40,7 @@
 					<div>
 						<div class="label description-label">02b WHO</div>
 						<div class="description">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							Software engineer and musician. A tacit understanding of patterns, both contrapuntal and programmatic. Years of relevant industry experience and a love for the practiced application of programming paradigms both big and small.
 						</div>
 					</div>
 				</div>
@@ -52,7 +52,7 @@
 					<div>
 						<div class="label description-label">03b WHAT</div>
 						<div class="description">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							Data visualizations, interactive and engaging simulations, and aesthetically pleasing user interfaces. Declarative solutions, with a functional fondness for creating and refactoring scalable architectures. Micro services and patterned applications that respond intuitively to the end user.
 						</div>
 					</div>
 				</div>
@@ -67,8 +67,7 @@
 		<section id="why" class="section section-c-2">
 			<div class="column">
 				<div class="wrapper wrapper-animation">
-					<GridSystem />
-					<div class="label animation-label animation-label-left">04a SCENE</div>
+					<div class="label animation-label animation-label-left">04a</div>
 				</div>
 			</div>
 			<div class="column">
@@ -76,7 +75,7 @@
 					<div class="text">
 						<div class="label description-label">04b WHY</div>
 						<div class="description">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							The conveyance of information through digital media. The betterment and continued growth of the tech community. The consumption of and utilization of web resources to to learn, teach, and deliver expertly executed products.
 						</div>
 					</div>
 				</div>
@@ -97,18 +96,11 @@ import SineLines from '@/components/visualizations/SineLines.vue'
 import ParticleNetwork from '@/components/visualizations/ParticleNetworkForce.vue'
 import CircleAnimation from '@/components/visualizations/CircleAnimation.vue'
 
-// import ForceMap from '@/components/visualizations/ForceMap.vue'
-// import Cube from '@/components/visualizations/Cube.vue'
-import GridSystem from '@/components/visualizations/GridSystem.vue'
-
 export default {
 	components: {
 		SineLines,
 		ParticleNetwork,
-		CircleAnimation,
-		// ForceMap,
-		// Cube,
-		GridSystem
+		CircleAnimation
 	}
 }
 </script>
@@ -116,6 +108,7 @@ export default {
 	#home {
 		height: 100vh;
 		#particle {
+			cursor: pointer;
 			position: absolute;
 		}
 		// position: relative;
@@ -133,8 +126,11 @@ export default {
 			}
 		}
 		@media (max-width: 900px) {
-			height: 200vh;
+			.wrapper-text {
+				padding: 5% 10%;
+			}
 			.lead-wrapper {
+				margin-left: -20px;
 				// margin-top: -60px;
 				// left: 10%;
 				.lead {
@@ -149,6 +145,7 @@ export default {
 			}
 		}
 		@media (max-width: 576px) {
+			height: 200vh;
 			.wrapper-text {
 				padding: 5% 10%;
 			}
@@ -190,7 +187,7 @@ export default {
 		// background: linear-gradient(135deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
 		// background: -moz-linear-gradient(135deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
 		// background: -webkit-linear-gradient(135deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
-		@media (max-width: 900px) {
+		@media (max-width: 576px) {
 			height: 100vw;
 		}
 	}

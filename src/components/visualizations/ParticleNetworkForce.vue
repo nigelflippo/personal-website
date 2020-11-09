@@ -10,8 +10,6 @@ export default {
 	},
 	data () {
 		return {
-			// isTouchMoving: false,
-			// isMouseDown: false,
 			colorSpectrum: [],
 			canvas: undefined,
 			density: 20000,
@@ -22,14 +20,23 @@ export default {
 			particles: [],
 			interactionParticle: null,
 			animationFrame: undefined,
-			width: window.innerWidth || document.documentElement.clientWidth,
-			height: window.innerHeight || document.documentElement.clientHeight
+			width: undefined,
+			height: undefined
 		}
 	},
 	mounted () {
 		this.drawChart()
 	},
 	methods: {
+		setChartRect () {
+			let width = window.innerWidth || document.documentElement.clientWidth
+			let height = window.innerHeight || document.documentElement.clientHeight
+			if (window.innerWidth > 576) {
+				width = width / 2
+			}
+			this.width = width
+			this.height = height
+		},
 		setColorSpectrum (amount) {
 			const getHslaColor = (hue, saturation, lightness, alpha) => {
 				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`

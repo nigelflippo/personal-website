@@ -39,13 +39,13 @@ export default {
 			border-radius: 50%;
 			height: 300px;
 			width: 300px;
-			animation: circular 15s linear infinite paused;
+			// animation: circular 15s linear infinite paused;
 			transform-origin: center;
 			&:hover {
 				animation-play-state: running;
 			}
 			$cubes: 25;
-			$cube-size: 24px;
+			$cube-size: 28px;
 			.cube {
 				top: 50%;
 				left: 50%;
@@ -60,26 +60,26 @@ export default {
 				}
 				@for $i from 1 through $cubes {
 					&-#{$i} {
-						z-index: $i;
+						// z-index: $i;
 						transition: all 0.3s ease-in-out #{$i * 0.075s};
 						$color-1: hslColor($hue: $i * (360 / 100) + 0);
 						$color-2: hslColor($hue: ($i + 10) * (360 / 100) + 0);
-						background: linear-gradient(135deg, $color-1 0%, $color-2 100%);
-						&:hover {
-							background: linear-gradient(135deg, darken($color-1, 10) 0%, darken($color-2, 10) 100%);
-						}
+						background: linear-gradient(45deg, $color-1 0%, $color-2 100%);
+						// &:hover {
+						// 	background: linear-gradient(135deg, darken($color-1, 10) 0%, darken($color-2, 10) 100%);
+						// }
 					}
 				}
 				@mixin circle($i, $name) {
 					$rotation: $i * (360 / $cubes);
-					&.rotate {
-						border-radius: 50%;
-						transform: rotate(#{$rotation}deg) translate(120px) scale(1.2);
-					}
 					&.square {
 						// border-radius: 50%;
-						transform: translate(0) scale(1.2);
-						// transform: rotate(#{360 / $cubes}deg) translate(125px) scale(1.2);
+						transform: rotate(#{$rotation}deg) translate(130px) scale(1);
+					}
+					&.rotate {
+						// border-radius: 50%;
+						transform: translate(0) scale(1);
+						// transform: rotate(#{360 / $cubes}deg) translate(125px);
 						// border-radius: 50%;
 					}
 				}
@@ -91,7 +91,7 @@ export default {
 				@keyframes circular {
 					to { transform: rotate(360deg); }
 				}
-				$spacer: 28px;
+				$spacer: 32px;
 				$spacer-lg: $spacer * 2;
 				&-1 {
 					transform: translateX($spacer-lg) translateY($spacer-lg);

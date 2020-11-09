@@ -17,14 +17,16 @@ export default {
 	created () {
 		document.body.style.setProperty('--play-state', this.playState)
 	},
-	// mounted () {
-	// 	this.bindEventListeners()
-	// },
+	mounted () {
+		// this.bindEventListeners()
+	},
 	beforeDestroy () {
 		this.removeEventListeners()
 	},
 	data () {
 		return {
+			pos: 0,
+			interval: null,
 			counter: 0,
 			isPlaying: false
 		}
@@ -36,11 +38,9 @@ export default {
 			el.removeEventListener('mouseout', this.handleMouseOut)
 		},
 		bindEventListeners () {
-			if (window.innerWidth > 900) {
-				const el = document.querySelector('.line-container')
-				el.addEventListener('mouseover', this.handleMouseOver)
-				el.addEventListener('mouseout', this.handleMouseOut)
-			}
+			const el = document.querySelector('.line-container')
+			el.addEventListener('mouseover', this.handleMouseOver)
+			el.addEventListener('mouseout', this.handleMouseOut)
 		},
 		handleMouseOver (event) {
 			document.querySelectorAll('.line-wrapper').forEach(el => {
@@ -69,13 +69,32 @@ export default {
 			}
 		},
 		resetAnimation () {
+			// clearInterval(this.interval)
 			this.counter++
 		}
 	},
 	watch: {
 		isPlaying () {
 			document.body.style.setProperty('--play-state', this.playState)
-			this.bindEventListeners()
+			// if (window.innerWidth < 900) {
+			// 	this.interval = setInterval(() => {
+			// 		document.querySelectorAll('.line-wrapper').forEach(el => {
+			// 			const x = el.getBoundingClientRect() && el.getBoundingClientRect().x
+			// 			const dx = Math.abs(this.pos - x)
+			// 			const dmax = 100
+			// 			if (dx < dmax) {
+			// 				if (dx !== 0) {
+			// 					const scale = (dmax / dx) ** (1 / 4)
+			// 					el.style.transform = `scale(${scale})`
+			// 				} else {
+			// 					el.style.transform = `scale(2)`
+			// 				}
+			// 			}
+			// 		})
+			// 		this.pos = (this.pos + 10) % 500
+			// 	}, 100)
+			// }
+			// this.bindEventListeners()
 		}
 	}
 }
@@ -132,13 +151,13 @@ export default {
 				height: 10px;
 				width: 10px;
 				border-radius: 50%;
-				opacity: 0.3;
+				opacity: 0.5;
 				@function hslColor($hue: 0, $saturation: 70%, $lightness: 70%) {
 					@return hsl($hue, $saturation, $lightness);
 				}
 				@mixin lines($n) {
 					animation:
-						scale $speed infinite $easing #{$n * $delayStagger + ($speed / 2)} alternate forwards var(--play-state),
+						scale $speed infinite $easing #{$n * $delayStagger + ($speed / 2)} alternate both var(--play-state),
 						translate $speed infinite $easing #{$n * $delayStagger} alternate forwards var(--play-state);
 				}
 				@for $i from 1 through 100 {
@@ -152,7 +171,7 @@ export default {
 
 			@keyframes scale {
 				from {
-					opacity: 0.3;
+					opacity: 0.5;
 				}
 				to {
 					opacity: 1;

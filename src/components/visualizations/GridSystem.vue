@@ -26,6 +26,9 @@
 					</div> -->
 					<div class="plane plane-z-3 grid tide-top">
 						<div class="c-1-s-20 r-1-s-20 bg-top"></div>
+						<div class="plane plane-z-3 grid">
+							<div class="c-1-s-20 r-7-s-1 wave"></div>
+						</div>
 					</div>
 					
 					<div class="plane plane-y-14 grid">
@@ -43,6 +46,43 @@
 					<div class="plane plane-y-21 grid">
 						<div class="c-1-s-20 r-1-s-3 bg-green"></div>
 					</div>
+
+					<!-- <div class="plane plane-y-21 grid">
+						<div class="c-1-s-20 r-4-s-1 bg-brown"></div>
+					</div>
+					<div class="plane plane-y-20 grid">
+						<div class="c-1-s-20 r-4-s-1 bg-brown"></div>
+					</div>
+					<div class="plane plane-z-5 grid">
+						<div class="c-1-s-20 r-1-s-1 bg-brown"></div>
+					</div>
+					<div class="plane plane-x-1 grid">
+						<div class="cx-17-1 bg-brown"></div>
+					</div>
+					<div class="plane plane-x-21 grid">
+						<div class="cx-17-1 bg-brown"></div>
+					</div> -->
+
+					<!-- <div class="tree">
+						<div class="tree-wrapper">
+							<div class="tree-side tree-side-1"></div>
+							<div class="tree-side tree-side-2"></div>
+							<div class="tree-side tree-side-3"></div>
+							<div class="tree-side tree-side-4"></div>
+						</div>
+						<div class="tree-wrapper tree-wrapper-middle">
+							<div class="tree-side tree-side-1"></div>
+							<div class="tree-side tree-side-2"></div>
+							<div class="tree-side tree-side-3"></div>
+							<div class="tree-side tree-side-4"></div>
+						</div>
+						<div class="tree-wrapper tree-wrapper-top">
+							<div class="tree-side tree-side-1"></div>
+							<div class="tree-side tree-side-2"></div>
+							<div class="tree-side tree-side-3"></div>
+							<div class="tree-side tree-side-4"></div>
+						</div>
+					</div> -->
 
 					<!-- <div class="plane plane-y-5 grid">
 						<div class="c-4-s-3 r-1-s-2 bg-gray"></div>
@@ -177,21 +217,22 @@ export default {
 		height: 100%;
 		width: 100%;
 		transform: translateY(-20px);
-		animation: float 3s ease-in-out infinite alternate;
+		animation: float 2s ease-in-out infinite alternate;
 		@keyframes float {
 			to { transform: translateY(2%); }
 		}
 	}
 	.grid-container {
 		perspective: 100000px;
-		--container-size: 350px;
-		@media screen and (max-width: 576px) {
-			--container-size: 200px;
+		--container-size: 280px;
+		@media screen and (max-width: 900px) {
+			// --container-size: 200px;
+			top: -10%;
 		}
 		height: var(--container-size);
 		width: var(--container-size);
 		position: relative;
-		top: 10%;
+		top: 15%;
 		left: 50%;
 		margin-left: calc(var(--container-size) / 2 * -1);
 		$grid: 20;
@@ -225,6 +266,7 @@ export default {
 			}
 		}
 		.plane {
+			// transform-style: preserve-3d;
 			background: none;
 			top: 0;
 			left: 0;
@@ -339,18 +381,27 @@ export default {
 		}
 		.bg-brown {
 			background: hsla(29, 50%, 56%, 1);
-			background: linear-gradient(90deg, hsla(29, 50%, 56%, 1) 0%, hsla(24, 24%, 57%, 1) 100%);
-			background: -moz-linear-gradient(90deg, hsla(29, 50%, 56%, 1) 0%, hsla(24, 24%, 57%, 1) 100%);
-			background: -webkit-linear-gradient(90deg, hsla(29, 50%, 56%, 1) 0%, hsla(24, 24%, 57%, 1) 100%);
+			background: linear-gradient(135deg, hsla(29, 50%, 56%, 1) 0%, hsla(24, 24%, 57%, 1) 100%);
+			background: -moz-linear-gradient(135deg, hsla(29, 50%, 56%, 1) 0%, hsla(24, 24%, 57%, 1) 100%);
+			background: -webkit-linear-gradient(135deg, hsla(29, 50%, 56%, 1) 0%, hsla(24, 24%, 57%, 1) 100%);
 		}
 		.tide-top {
-			animation: tide-top 3s ease-in-out alternate infinite;
+			animation: tide-top 2s ease-in-out alternate infinite;
 		}
 		.tide-bottom {
-			animation: tide-bottom 3s ease-in-out alternate infinite;
+			animation: tide-bottom 2s ease-in-out alternate infinite;
 		}
 		.tide-side {
-			animation: tide-side 3s ease-in-out alternate infinite;
+			animation: tide-side 2s ease-in-out alternate infinite;
+		}
+		.wave {
+			background: #fff;
+			animation: wave 4s ease-in-out forwards infinite;
+			opacity: 0.6;
+			transform: scaleY(0.1);
+			@keyframes wave {
+				to { opacity: 0; transform: scaleY(6) }
+			}
 		}
 		@keyframes tide-top {
 			from {
@@ -376,11 +427,43 @@ export default {
 				transform: scaleY(1.6);
 			}
 		}
-	}
-	@media screen and (max-width:576px) {
-		.btn-container {
-			top: 4%;
-			right: 4%;
-		}
+		// .tree {
+		// 	left: 50%;
+		// 	top: 50%;
+		// 	.tree-wrapper {
+		// 		transform: translateZ(-90px) rotateX(270deg);
+		// 		transform-style: preserve-3d;
+		// 		position: relative;
+		// 		&-middle {
+		// 			transform: translateZ(-82px) rotateX(270deg);
+		// 		}
+		// 		&-top {
+		// 			transform: translateZ(-74px) rotateX(270deg);
+		// 		}
+		// 	}
+		// 	.tree-side {
+		// 		transform-style: preserve-3d;
+		// 		transform-origin: 50% 0;
+		// 		position: absolute;
+		// 		border-right: 8px solid transparent;
+		// 		border-left: 8px solid transparent;
+		// 		&-1 {
+		// 			border-bottom: 20px solid hsla(100, 40%, 56%, 1);
+		// 			transform: rotateY(90deg) rotateX(23deg);
+		// 		}
+		// 		&-2 {
+		// 			border-bottom: 20px solid hsla(100, 40%, 56%, 1);
+		// 			transform: rotateY(180deg) rotateX(23deg);
+		// 		}
+		// 		&-3 {
+		// 			border-bottom: 20px solid hsla(80, 40%, 56%, 1);
+		// 			transform: rotateY(270deg) rotateX(23deg);
+		// 		}
+		// 		&-4 {
+		// 			border-bottom: 20px solid hsla(80, 40%, 56%, 1);
+		// 			transform: rotateY(360deg) rotateX(23deg);
+		// 		}
+		// 	}
+		// }
 	}
 </style>
