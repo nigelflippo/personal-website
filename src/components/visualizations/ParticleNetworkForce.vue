@@ -55,8 +55,7 @@ export default {
 			}, 100)
 		},
 		onResize () {
-			this.width = window.innerWidth || document.documentElement.clientWidth
-			this.height = window.innerHeight || document.documentElement.clientHeight
+			this.setChartRect()
 			const scale = window.devicePixelRatio
 			const canvas = document.getElementById('particle')
 			const ctx = canvas.getContext('2d')

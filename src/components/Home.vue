@@ -84,7 +84,6 @@
 		<section id="contact" class="section section-c-1">
 			<div class="column">
 				<div class="wrapper wrapper-text">
-					<!-- <SineLines /> -->
 					<button class="btn">SAY HELLO</button>
 				</div>
 			</div>
@@ -107,18 +106,14 @@ export default {
 <style lang="scss">
 	#home {
 		height: 100vh;
+		background-color: #f8f8f8;
+		overflow: hidden;
 		#particle {
 			cursor: pointer;
 			position: absolute;
 		}
-		// position: relative;
-		background-color: #f8f8f8;
-		overflow: hidden;
 		.lead-wrapper {
-			// margin-top: -100px;
-			// top: 50%;
-			// left: 5%;
-			// position: absolute;
+			left: 5%;
 			margin-left: -100px;
 			.lead {
 				line-height: 1.2;
@@ -131,8 +126,6 @@ export default {
 			}
 			.lead-wrapper {
 				margin-left: -20px;
-				// margin-top: -60px;
-				// left: 10%;
 				.lead {
 					font-size: 44px;
 				}
@@ -144,15 +137,17 @@ export default {
 				}
 			}
 		}
-		@media (max-width: 576px) {
+		@media (max-width: 700px) {
 			height: 200vh;
 			.wrapper-text {
 				padding: 5% 10%;
 			}
+			.animation-label {
+				top: 5%;
+			}
 			.lead-wrapper {
 				margin-left: -20px;
 				margin-top: 20px;
-				// left: 10%;
 				.lead {
 					font-size: 44px;
 				}
@@ -167,6 +162,9 @@ export default {
 	}
 	#hello {
 		background-color: #3D3C3E;
+		.column {
+			min-height: 300px;
+		}
 		.wrapper-text {
 			color: #f1f1f1;
 		}
@@ -183,10 +181,6 @@ export default {
 	#contact {
 		background-color: #f8f8f8;
 		height: 360px;
-		// background: hsla(186, 33%, 94%, 1);
-		// background: linear-gradient(135deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
-		// background: -moz-linear-gradient(135deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
-		// background: -webkit-linear-gradient(135deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
 		@media (max-width: 576px) {
 			height: 100vw;
 		}

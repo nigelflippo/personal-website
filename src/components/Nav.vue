@@ -43,10 +43,10 @@ export default {
 	data () {
 		return {
 			sections: [
-				{
-					id: 'home',
-					name: '00 HOME'
-				},
+				// {
+				// 	id: 'home',
+				// 	name: '00 HOME'
+				// },
 				{
 					id: 'hello',
 					name: '01 HELLO'
@@ -121,13 +121,16 @@ export default {
 				}
 			}
 		}
-		@media screen and (max-width: 576px) {
+		@media screen and (max-width: 900px) {
 			.logo {
 				top: 20px;
-				font-size: 42px;
+				font-size: 38px;
 			}
 			.nav .nav-group {
-				font-size: 42px;
+				font-size: 38px;
+				li {
+					padding: 2px 0px;
+				}
 			}
 		}
 	}

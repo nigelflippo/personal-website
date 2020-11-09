@@ -1,7 +1,7 @@
 <template>
 	<transition name="line" mode="out-in">
 		<div class="line-container" @click="handleTogglePlay" :key="counter">
-			<div v-for="(n, index) in 100" :key="index" class="line-wrapper">
+			<div v-for="(n, index) in numberOfElements" :key="index" class="line-wrapper">
 				<div :class="`line line-${n}`"></div>
 			</div>
 		</div>
@@ -12,12 +12,17 @@ export default {
 	computed: {
 		playState () {
 			return this.isPlaying ? 'running' : 'paused'
+		},
+		numberOfElements () {
+			return Math.ceil(this.width / 10)
 		}
 	},
 	created () {
+		window.addEventListener('resize', this.setAnimationRect)
 		document.body.style.setProperty('--play-state', this.playState)
 	},
 	mounted () {
+		this.setAnimationRect()
 		// this.bindEventListeners()
 	},
 	beforeDestroy () {
@@ -25,13 +30,19 @@ export default {
 	},
 	data () {
 		return {
-			pos: 0,
-			interval: null,
+			width: undefined,
+			// pos: 0,
+			// interval: null,
 			counter: 0,
 			isPlaying: false
 		}
 	},
 	methods: {
+		setAnimationRect () {
+			const container = document.querySelector('.line-container')
+			const width = container.offsetWidth
+			this.width = width
+		},
 		removeEventListeners () {
 			const el = document.querySelector('.line-container')
 			el.removeEventListener('mouseover', this.handleMouseOver)
