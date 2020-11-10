@@ -99,39 +99,5 @@ export default {
 				transform: translateX(-20%);
 			}
 		}
-		.label {
-			font-family: 'Blender Pro';
-			font-size: 20px;
-			&.description-label {
-				margin-bottom: 12px;
-			}
-			&.animation-label {
-				cursor: pointer;
-				position: absolute;
-				bottom: 10%;
-				z-index: 100;
-				&-left {
-					left: 10%;
-				}
-				&-right {
-					right: 10%;
-				}
-			}
-		}
-		.description {
-			font-size: 20px;
-			line-height: 1.8;
-		}
-		@media (max-width: 900px) {
-			.label {
-				font-size: 16px;
-				&.animation-label {
-					bottom: 5%;
-				}
-			}
-			.description {
-				font-size: 16px;
-			}
-		}
 	}
 </style>

@@ -31,9 +31,9 @@ export default {
 		setChartRect () {
 			let width = window.innerWidth || document.documentElement.clientWidth
 			let height = window.innerHeight || document.documentElement.clientHeight
-			if (window.innerWidth > 576) {
-				width = width / 2
-			}
+			// if (window.innerWidth > 576) {
+			// 	width = width / 2
+			// }
 			this.width = width
 			this.height = height
 		},

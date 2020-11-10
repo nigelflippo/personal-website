@@ -12,7 +12,7 @@
 			<div class="column">
 				<div class="wrapper wrapper-animation">
 					<ParticleNetwork />
-					<div class="label animation-label animation-label-right">01a PARTICLE NETWORK</div>
+					<div class="label animation-label animation-label-right">01a</div>
 				</div>
 			</div>
 		</section>
@@ -31,8 +31,8 @@
 		<section id="who" class="section section-c-2">
 			<div class="column">
 				<div class="wrapper wrapper-animation">
-					<CircleAnimation />
-					<div class="label animation-label animation-label-left">02a TRANSFORMS</div>
+					<SineLines />
+					<div class="label animation-label animation-label-left">02a</div>
 				</div>
 			</div>
 			<div class="column">
@@ -59,14 +59,14 @@
 			</div>
 			<div class="column">
 				<div class="wrapper wrapper-animation">
-					<SineLines />
-					<div class="label animation-label animation-label-right">03a HELIX</div>
+					<div class="label animation-label animation-label-right">03a</div>
 				</div>
 			</div>
 		</section>
 		<section id="why" class="section section-c-2">
 			<div class="column">
 				<div class="wrapper wrapper-animation">
+					<FibonacciCircle />
 					<div class="label animation-label animation-label-left">04a</div>
 				</div>
 			</div>
@@ -78,6 +78,25 @@
 							The conveyance of information through digital media. The betterment and continued growth of the tech community. The consumption of and utilization of web resources to to learn, teach, and deliver expertly executed products.
 						</div>
 					</div>
+				</div>
+			</div>
+		</section>
+		<section id="why" class="section section-c-2">
+			<div class="column">
+				<div class="wrapper wrapper-text">
+					<CircleAnimation />
+					<div class="text">
+						<div class="label description-label">05b WHERE</div>
+						<div class="description">
+							The conveyance of information through digital media. The betterment and continued growth of the tech community. The consumption of and utilization of web resources to to learn, teach, and deliver expertly executed products.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="column">
+				<div class="wrapper wrapper-animation">
+					<!-- <FibonacciCircle /> -->
+					<div class="label animation-label animation-label-left">05a</div>
 				</div>
 			</div>
 		</section>
@@ -94,12 +113,14 @@
 import SineLines from '@/components/visualizations/SineLines.vue'
 import ParticleNetwork from '@/components/visualizations/ParticleNetworkForce.vue'
 import CircleAnimation from '@/components/visualizations/CircleAnimation.vue'
+import FibonacciCircle from '@/components/visualizations/FibonacciCircle.vue'
 
 export default {
 	components: {
 		SineLines,
 		ParticleNetwork,
-		CircleAnimation
+		CircleAnimation,
+		FibonacciCircle
 	}
 }
 </script>
@@ -141,9 +162,6 @@ export default {
 			height: 200vh;
 			.wrapper-text {
 				padding: 5% 10%;
-			}
-			.animation-label {
-				top: 5%;
 			}
 			.lead-wrapper {
 				margin-left: -20px;

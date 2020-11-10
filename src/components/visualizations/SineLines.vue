@@ -1,7 +1,8 @@
 <template>
 	<transition name="line" mode="out-in">
-		<div class="line-container" @click="handleTogglePlay" :key="counter">
-			<div v-for="(n, index) in numberOfElements" :key="index" class="line-wrapper">
+		<!-- <div class="line-container" @click="handleTogglePlay" :key="counter"> -->
+		<div class="line-container" :key="counter">
+			<div v-for="(n, index) in 100" :key="index" class="line-wrapper">
 				<div :class="`line line-${n}`"></div>
 			</div>
 		</div>
@@ -10,103 +11,102 @@
 <script>
 export default {
 	computed: {
-		playState () {
-			return this.isPlaying ? 'running' : 'paused'
-		},
+		// playState () {
+		// 	return this.isPlaying ? 'running' : 'paused'
+		// },
 		numberOfElements () {
 			return Math.ceil(this.width / 10)
 		}
 	},
 	created () {
-		window.addEventListener('resize', this.setAnimationRect)
-		document.body.style.setProperty('--play-state', this.playState)
+		// this.onResize()
+		// window.addEventListener('resize', this.onResize)
+		// document.body.style.setProperty('--play-state', this.playState)
 	},
-	mounted () {
-		this.setAnimationRect()
-		// this.bindEventListeners()
-	},
-	beforeDestroy () {
-		this.removeEventListeners()
-	},
+	// beforeDestroy () {
+	// 	this.removeEventListeners()
+	// },
 	data () {
 		return {
 			width: undefined,
 			// pos: 0,
 			// interval: null,
 			counter: 0,
-			isPlaying: false
+			isPlaying: true
 		}
 	},
 	methods: {
-		setAnimationRect () {
-			const container = document.querySelector('.line-container')
-			const width = container.offsetWidth
-			this.width = width
-		},
-		removeEventListeners () {
-			const el = document.querySelector('.line-container')
-			el.removeEventListener('mouseover', this.handleMouseOver)
-			el.removeEventListener('mouseout', this.handleMouseOut)
-		},
-		bindEventListeners () {
-			const el = document.querySelector('.line-container')
-			el.addEventListener('mouseover', this.handleMouseOver)
-			el.addEventListener('mouseout', this.handleMouseOut)
-		},
-		handleMouseOver (event) {
-			document.querySelectorAll('.line-wrapper').forEach(el => {
-				const x = el.getBoundingClientRect() && el.getBoundingClientRect().x
-				const dx = Math.abs(event.target.getBoundingClientRect().x - x)
-				const dmax = 100
-				if (dx < dmax) {
-					if (dx !== 0) {
-						const scale = (dmax / dx) ** (1 / 6)
-						el.style.transform = `scale(${scale})`
-					} else {
-						el.style.transform = `scale(1.5)`
-					}
-				}
-			})
-		},
-		handleMouseOut () {
-			document.querySelectorAll('.line-wrapper').forEach(el => {
-				el.style.transform = 'scale(1)'
-			})
-		},
-		handleTogglePlay () {
-			this.isPlaying = !this.isPlaying
-			if (!this.isPlaying) {
-				this.resetAnimation()
-			}
-		},
+		// onResize () {
+		// 	this.resetAnimation()
+		// 	const width = window.innerWidth > 700
+		// 		? window.innerWidth / 2
+		// 		: window.innerWidth
+		// 	this.width = width
+		// },
+		// removeEventListeners () {
+		// 	const el = document.querySelector('.line-container')
+		// 	el.removeEventListener('mouseover', this.handleMouseOver)
+		// 	el.removeEventListener('mouseout', this.handleMouseOut)
+		// },
+		// bindEventListeners () {
+		// 	const el = document.querySelector('.line-container')
+		// 	el.addEventListener('mouseover', this.handleMouseOver)
+		// 	el.addEventListener('mouseout', this.handleMouseOut)
+		// },
+		// handleMouseOver (event) {
+		// 	document.querySelectorAll('.line-wrapper').forEach(el => {
+		// 		const x = el.getBoundingClientRect() && el.getBoundingClientRect().x
+		// 		const dx = Math.abs(event.target.getBoundingClientRect().x - x)
+		// 		const dmax = 100
+		// 		if (dx < dmax) {
+		// 			if (dx !== 0) {
+		// 				const scale = (dmax / dx) ** (1 / 6)
+		// 				el.style.transform = `scale(${scale})`
+		// 			} else {
+		// 				el.style.transform = `scale(1.5)`
+		// 			}
+		// 		}
+		// 	})
+		// },
+		// handleMouseOut () {
+		// 	document.querySelectorAll('.line-wrapper').forEach(el => {
+		// 		el.style.transform = 'scale(1)'
+		// 	})
+		// },
+		// handleTogglePlay () {
+		// 	this.isPlaying = !this.isPlaying
+		// 	if (!this.isPlaying) {
+		// 		this.resetAnimation()
+		// 	}
+		// },
 		resetAnimation () {
 			// clearInterval(this.interval)
 			this.counter++
 		}
 	},
 	watch: {
-		isPlaying () {
-			document.body.style.setProperty('--play-state', this.playState)
-			// if (window.innerWidth < 900) {
-			// 	this.interval = setInterval(() => {
-			// 		document.querySelectorAll('.line-wrapper').forEach(el => {
-			// 			const x = el.getBoundingClientRect() && el.getBoundingClientRect().x
-			// 			const dx = Math.abs(this.pos - x)
-			// 			const dmax = 100
-			// 			if (dx < dmax) {
-			// 				if (dx !== 0) {
-			// 					const scale = (dmax / dx) ** (1 / 4)
-			// 					el.style.transform = `scale(${scale})`
-			// 				} else {
-			// 					el.style.transform = `scale(2)`
-			// 				}
-			// 			}
-			// 		})
-			// 		this.pos = (this.pos + 10) % 500
-			// 	}, 100)
-			// }
-			// this.bindEventListeners()
-		}
+		// isPlaying () {
+		// 	document.body.style.setProperty('--play-state', this.playState)
+		// 	// if (window.innerWidth < 900) {
+		// 	// 	this.interval = setInterval(() => {
+		// 	// 		document.querySelectorAll('.line-wrapper').forEach(el => {
+		// 	// 			const x = el.getBoundingClientRect() && el.getBoundingClientRect().x
+		// 	// 			const dx = Math.abs(this.pos - x)
+		// 	// 			const dmax = 100
+		// 	// 			if (dx < dmax) {
+		// 	// 				if (dx !== 0) {
+		// 	// 					const scale = (dmax / dx) ** (1 / 4)
+		// 	// 					el.style.transform = `scale(${scale})`
+		// 	// 				} else {
+		// 	// 					el.style.transform = `scale(2)`
+		// 	// 				}
+		// 	// 			}
+		// 	// 		})
+		// 	// 		this.pos = (this.pos + 10) % 500
+		// 	// 	}, 100)
+		// 	// }
+		// 	// this.bindEventListeners()
+		// }
 	}
 }
 </script>
@@ -124,15 +124,20 @@ export default {
 		opacity: 0;
 	}
 	.line-container {
+		// --play-state-hover: paused;
+		// &:hover {
+		// 	--play-state-hover: running;
+		// }
 		cursor: pointer;
-		top: -50px;
+		// top: -50px;
+		left: -50px;
 		overflow: hidden;
 		height: 100%;
 		width: 100%;
 		position: absolute;
 		display: grid;
-		grid-template-rows: 1;
-		grid-template-columns: repeat(100, 1fr);
+		grid-template-columns: 1;
+		grid-template-rows: repeat(100, 1fr);
 		.line-wrapper {
 			height: 100%;
 			width: 100%;
@@ -168,8 +173,8 @@ export default {
 				}
 				@mixin lines($n) {
 					animation:
-						scale $speed infinite $easing #{$n * $delayStagger + ($speed / 2)} alternate both var(--play-state),
-						translate $speed infinite $easing #{$n * $delayStagger} alternate forwards var(--play-state);
+						scale $speed infinite $easing #{$n * $delayStagger + ($speed / 2)} alternate both,
+						translate $speed infinite $easing #{$n * $delayStagger} alternate forwards;
 				}
 				@for $i from 1 through 100 {
 					&-#{$i} {
@@ -182,7 +187,7 @@ export default {
 
 			@keyframes scale {
 				from {
-					opacity: 0.5;
+					opacity: 0.1;
 				}
 				to {
 					opacity: 1;
@@ -190,8 +195,8 @@ export default {
 			}
 			@keyframes translate {
 				to {
-					-webkit-transform: translateY(100px);
-					transform: translateY(100px);
+					-webkit-transform: translateX(100px);
+					transform: translateX(100px);
 				}
 			}
 		}
