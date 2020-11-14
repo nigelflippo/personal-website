@@ -112,7 +112,7 @@ export default {
 </script>
 <style lang="scss">
 	$easing: cubic-bezier(0.37, 0, 0.63, 1);
-	$speed: 0.6s;
+	$speed: 0.7s;
 	$delayStagger: 0.1s;
 	.line-enter-active, .line-leave-active {
 		transition: opacity 0.3s ease;

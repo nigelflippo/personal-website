@@ -2,7 +2,7 @@
 	<transition name="fade" mode="out-in">
 		<Loader v-if="isLoading" />
 		<div v-else class="app-container">
-			<Nav />
+			<!-- <Nav /> -->
 			<div class="inner-container" :class="{ 'menu-out': isToggled }">
 				<Home />
 			</div>
@@ -11,7 +11,7 @@
 </template>
 <script>
 import Loader from '@/components/Loader'
-import Nav from '@/components/Nav.vue'
+// import Nav from '@/components/Nav.vue'
 import Home from '@/components/Home.vue'
 // import CircleAnimation from '@/components/visualizations/CircleAnimation.vue'
 
@@ -19,7 +19,7 @@ import { mapGetters } from 'vuex'
 export default {
 	components: {
 		Loader,
-		Nav,
+		// Nav,
 		Home,
 		// CircleAnimation
 	},

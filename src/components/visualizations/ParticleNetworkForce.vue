@@ -30,7 +30,8 @@ export default {
 	methods: {
 		setChartRect () {
 			let width = window.innerWidth || document.documentElement.clientWidth
-			let height = window.innerHeight || document.documentElement.clientHeight
+			// let height = window.innerHeight || document.documentElement.clientHeight
+			let height = 600
 			// if (window.innerWidth > 576) {
 			// 	width = width / 2
 			// }
@@ -217,7 +218,7 @@ export default {
 								ctx.beginPath()
 								ctx.strokeStyle = lineColor
 								ctx.globalAlpha = (options.lineDistance - distance) / options.lineDistance * p1.opacity * p2.opacity
-								ctx.lineWidth = 1
+								ctx.lineWidth = 1.5
 								ctx.moveTo(p1.x, p1.y)
 								ctx.lineTo(p2.x, p2.y)
 								ctx.stroke()

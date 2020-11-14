@@ -19,6 +19,8 @@
 				</ol>
 			</nav>
 		</div>
+		<div class="three-dot">
+		</div>
 	</div>
 </template>
 <script>
@@ -108,7 +110,7 @@ export default {
 			.nav-group {
 				padding: 0;
 				margin: auto 50px;
-				font-size: 64px;
+				font-size: 52px;
 				list-style: none;
 				color: #f1f1f1;
 				li {

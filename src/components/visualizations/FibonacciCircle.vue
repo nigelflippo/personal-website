@@ -1,7 +1,7 @@
 <template>
 	<transition name="reset" mode="out-in">
 		<div class="anim-container" :key="counter">
-			<div v-for="(n, index) of 40" :class="`circle circle-${n}`" :key="index"></div>
+			<div v-for="(n, index) of 50" :class="`circle circle-${n}`" :key="index"></div>
 		</div>
 	</transition>
 </template>
@@ -70,7 +70,7 @@ export default {
 			border-radius: 50%;
 			border: 3px solid;
 			$base-size: 8px;
-			@for $i from 1 through 40 {
+			@for $i from 1 through 50 {
 				&-#{$i} {
 					$color: hslColor($hue: 0, $saturation: 0, $lightness: ($i * 2));
 					// $color: hslColor($hue: ($i * 14) + 150);
