@@ -3,6 +3,7 @@
 		<Loader v-if="isLoading" />
 		<div v-else class="app-container">
 			<!-- <Nav /> -->
+			<ThreeDot />
 			<div class="inner-container" :class="{ 'menu-out': isToggled }">
 				<Home />
 			</div>
@@ -13,6 +14,8 @@
 import Loader from '@/components/Loader'
 // import Nav from '@/components/Nav.vue'
 import Home from '@/components/Home.vue'
+import ThreeDot from'@/components/ThreeDot'
+
 // import CircleAnimation from '@/components/visualizations/CircleAnimation.vue'
 
 import { mapGetters } from 'vuex'
@@ -21,6 +24,7 @@ export default {
 		Loader,
 		// Nav,
 		Home,
+		ThreeDot
 		// CircleAnimation
 	},
 	computed: {
