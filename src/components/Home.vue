@@ -1,7 +1,6 @@
 <template>
 		<div class="body">
 			<div id="intro" class="section intro">
-				<!-- <div class="logo">\N\</div> -->
 				<ParticleNetwork />
 				<div class="label label-right">
 					<div class="text">INTRODUCTION</div>
@@ -97,22 +96,9 @@ export default {
 	#particle {
 		position: absolute;
 		background-color: #FAFAFF;
-
-		// background-color: #292929;
 		cursor: pointer;
 		z-index: -1;
 		opacity: 0.6;
-	}
-	.logo {
-		position: absolute;
-		top: 20px;
-		left: 20px;
-		font-size: 44px;
-		@media (max-width: 576px) {
-			font-size: 38px;
-			top: 10px;
-			left: 10px;
-		}
 	}
 	.line-deco {
 		width: 60px;
@@ -120,78 +106,4 @@ export default {
 		margin-bottom: 20px;
 		background-color: #292929;
 	}
-	// #home {
-	// 	height: 100vh;
-	// 	background-color: #f8f8f8;
-	// 	overflow: hidden;
-	// 	.lead-wrapper {
-	// 		left: 5%;
-	// 		margin-left: -100px;
-	// 		.lead {
-	// 			line-height: 1.2;
-	// 			font-size: 60px;
-	// 		}
-	// 	}
-	// 	@media (max-width: 900px) {
-	// 		.wrapper-text {
-	// 			padding: 5% 10%;
-	// 		}
-	// 		.lead-wrapper {
-	// 			margin-left: -20px;
-	// 			.lead {
-	// 				font-size: 44px;
-	// 			}
-	// 			.btn {
-	// 				margin-top: 14px;
-	// 				font-size: 14px;
-	// 				padding: 8px 24px;
-	// 				width: 160px;
-	// 			}
-	// 		}
-	// 	}
-	// 	@media (max-width: 700px) {
-	// 		height: 200vh;
-	// 		.wrapper-text {
-	// 			padding: 5% 10%;
-	// 		}
-	// 		.lead-wrapper {
-	// 			margin-left: -20px;
-	// 			margin-top: 20px;
-	// 			.lead {
-	// 				font-size: 44px;
-	// 			}
-	// 			.btn {
-	// 				margin-top: 14px;
-	// 				font-size: 14px;
-	// 				padding: 8px 24px;
-	// 				width: 160px;
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// #hello {
-	// 	background-color: #3D3C3E;
-	// 	.column {
-	// 		min-height: 300px;
-	// 	}
-	// 	.wrapper-text {
-	// 		color: #f1f1f1;
-	// 	}
-	// }
-	// #who {
-	// 	.wrapper-animation {
-	// 		overflow: hidden;
-	// 		#chart {
-	// 			position: absolute;
-	// 			opacity: 0.4;
-	// 		}
-	// 	}
-	// }
-	// #contact {
-	// 	background-color: #f8f8f8;
-	// 	height: 360px;
-	// 	@media (max-width: 576px) {
-	// 		height: 100vw;
-	// 	}
-	// }
 </style>
