@@ -14,9 +14,6 @@
 	#cube-wrapper {
 		height: 200px;
 		width: 200px;
-		// top: 50%;
-		// left: 50%;
-		// position: absolute;
 		perspective: 100000px;
 		.cube {
 			@function hslColor($hue: 0, $saturation: 70%, $lightness: 70%) {

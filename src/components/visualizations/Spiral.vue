@@ -1,41 +1,13 @@
 <template>
 	<transition name="reset" mode="out-in">
-		<div class="anim-container" :key="counter">
-			<div v-for="(n, index) of 50" :class="`circle circle-${n}`" :key="index"></div>
+		<div class="spiral-container">
+			<div class="spiral-wrapper">
+				<div v-for="(n, index) of 50" :class="`semi-circle semi-circle-${n}`" :key="index"></div>
+			</div>
 		</div>
 	</transition>
 </template>
 <script>
-export default {
-	computed: {
-		playState () {
-			return this.isPlaying ? 'running' : 'paused'
-		}
-	},
-	created () {
-		document.body.style.setProperty('--play-state', this.playState)
-	},
-	data () {
-		return {
-			isPlaying: true,
-			counter: 0
-		}
-	},
-	methods: {
-		onMouseOver () {
-			this.isPlaying = true
-		},
-		onMouseOut () {
-			this.isPlaying = false
-			this.counter++
-		}
-	},
-	watch: {
-		isPlaying () {
-			document.body.style.setProperty('--play-state', this.playState)
-		}
-	}
-}
 </script>
 <style lang="scss">
 	.reset-enter-active, .reset-leave-active {
@@ -47,23 +19,23 @@ export default {
 	.reset-leave-to {
 		opacity: 0;
 	}
-	.anim-container {
-		// --play-state: paused;
-		// &:hover {
-		// 	--play-state: running;
-		// }
+	.spiral-container {
 		opacity: 0.8;
 		overflow: hidden;
 		height: 100%;
 		width: 100%;
 		position: relative;
+		.spiral-wrapper {
+			height: 100%;
+			width: 100%;
+		}
 		@function hslColor($hue: 0, $saturation: 70%, $lightness: 70%) {
 			@return hsl($hue, $saturation, $lightness);
 		}
 		@mixin lines($n) {
-			animation: spin 3s infinite ease-in-out #{0.05s * $n} forwards alternate var(--play-state);
+			animation: spin 3s infinite ease-in-out #{0.05s * $n} forwards alternate;
 		}
-		.circle {
+		.semi-circle {
 			top: 50%;
 			left: 50%;
 			position: absolute;
@@ -73,8 +45,6 @@ export default {
 			@for $i from 1 through 50 {
 				&-#{$i} {
 					$color: hslColor($hue: 0, $saturation: 0, $lightness: ($i * 2));
-					// $color: hslColor($hue: ($i * 14) + 150);
-					// $color: hslColor($hue: $i * 5);
 					border-color: $color transparent transparent;
 					height: #{$i * $base-size};
 					width: #{$i * $base-size};

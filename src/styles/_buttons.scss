@@ -15,9 +15,15 @@
 	color: #333234;
 	padding: 12px 36px;
 	border-radius: 4px;
+	a {
+		text-decoration: none;
+		color: #333234
+	}
 	&:hover {
 		background-color: #333234;
-		color: #f1f1f1;
+		a {
+			color: #f1f1f1;
+		}
 	}
 	@media (max-width: 900px) {
 		.btn {

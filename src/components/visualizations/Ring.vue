@@ -1,15 +1,15 @@
 <template>
-	<div class="three-dee">
-		<div class="inner-3d-container">
-			<div class="render">
+	<div class="ring-container">
+		<div class="ring-wrapper">
+			<div class="render-layer">
 				<div class="cube cube-1">
 					<div class="cube-wrapper">
-					<div class="side side-front"></div>
-					<div class="side side-back"></div>
-					<div class="side side-top"></div>
-					<div class="side side-bottom"></div>
-					<div class="side side-left"></div>
-					<div class="side side-right"></div>
+						<div class="side side-front"></div>
+						<div class="side side-back"></div>
+						<div class="side side-top"></div>
+						<div class="side side-bottom"></div>
+						<div class="side side-left"></div>
+						<div class="side side-right"></div>
 					</div>
 				</div>
 				<div class="cube cube-2">
@@ -107,22 +107,20 @@
 	</div>
 </template>
 <style lang="scss">
-.three-dee {
+.ring-container {
 	overflow: hidden;
 	opacity: 0.8;
 	position: relative;
 	height: 100%;
 	width: 100%;
-	.inner-3d-container {
+	.ring-wrapper {
 		perspective: 1000px;
 		top: 50%;
 		left: 50%;
 		position: absolute;
 		border-radius: 50%;
-		.render {
-			// transform-origin: center;
+		.render-layer {
 			animation: spin3d 8s linear infinite forwards running;
-			// -webkit-transform: rotateX(54.7deg);
 			transform: rotateX(60deg) rotateZ(0deg);
 			transform-style: preserve-3d;
 			width: 100%;
@@ -130,16 +128,9 @@
 		}
 		@keyframes spin3d {
 			to {
-				// -webkit-transform: rotateX(60deg) rotateZ(360deg);
 				transform: rotateX(60deg) rotateZ(-360deg);
 			}
 		}
-		// @-webkit-keyframes spin3d {
-		// 	to {
-		// 		-webkit-transform: rotateX(54.7deg) rotateZ(360deg);
-		// 		transform: rotateX(54.7deg) rotateZ(360deg);
-		// 	}
-		// }
 		.cube {
 			position: absolute;
 			transform-style: preserve-3d;
@@ -202,5 +193,4 @@
 		}
 	}
 }
-
 </style>

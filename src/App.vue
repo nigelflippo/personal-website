@@ -2,9 +2,8 @@
 	<transition name="fade" mode="out-in">
 		<Loader v-if="isLoading" />
 		<div v-else class="app-container">
-			<!-- <Nav /> -->
-			<ThreeDot />
-			<div class="inner-container" :class="{ 'menu-out': isToggled }">
+			<More />
+			<div class="inner-container">
 				<Home />
 			</div>
 		</div>
@@ -14,9 +13,7 @@
 import Loader from '@/components/Loader'
 // import Nav from '@/components/Nav.vue'
 import Home from '@/components/Home.vue'
-import ThreeDot from'@/components/ThreeDot'
-
-// import CircleAnimation from '@/components/visualizations/CircleAnimation.vue'
+import More from'@/components/More'
 
 import { mapGetters } from 'vuex'
 export default {
@@ -24,8 +21,7 @@ export default {
 		Loader,
 		// Nav,
 		Home,
-		ThreeDot
-		// CircleAnimation
+		More
 	},
 	computed: {
 		...mapGetters([
@@ -34,6 +30,8 @@ export default {
 		])
 	},
 	created () {
+		let vh = window.innerHeight * 0.01
+		document.documentElement.style.setProperty('--vh', `${vh}px`)
 		setTimeout(() => {
 			this.isLoading = false
 		}, 1500)
@@ -72,12 +70,14 @@ export default {
 	}
 	html {
 		box-sizing: border-box;
+		// height: 100%;
 		height: 100vh;
+		height: calc(var(--vh, 1vh) * 100);
 		width: 100%;
 	}
 	body {
 		overflow-x: hidden;
-		height: 100vh;
+		height: 100%;
 		width: 100%;
 		margin: 0;
 		padding: 0;
@@ -95,6 +95,7 @@ export default {
 		opacity: 0;
 	}
 	.app-container {
+		height: 100%;
 		font-family: 'Blender Pro';
 		.inner-container {
 			transition: all 0.4s ease;

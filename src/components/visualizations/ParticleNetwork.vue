@@ -19,26 +19,33 @@ export default {
 			colorInterval: null,
 			particles: [],
 			interactionParticle: null,
-			mobileInteractionParticle: null,
 			animationFrame: undefined,
-			width: window.innerWidth || document.documentElement.clientWidth,
-			height: window.innerHeight || document.documentElement.clientHeight
+			width: undefined,
+			height: undefined
 		}
 	},
 	mounted () {
 		this.drawChart()
 	},
 	methods: {
+		setChartRect () {
+			let width = window.innerWidth || document.documentElement.clientWidth
+			// let height = window.innerHeight || document.documentElement.clientHeight
+			let height = 600
+			// if (window.innerWidth > 576) {
+			// 	width = width / 2
+			// }
+			this.width = width
+			this.height = height
+		},
 		setColorSpectrum (amount) {
-			// const hueDelta = Math.trunc(360 / amount)
 			const getHslaColor = (hue, saturation, lightness, alpha) => {
 				return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
 			}
 			for (let i = 0; i < amount; i++) {
-				// const hue = i * hueDelta
-				const hue = Math.floor(i / amount * 100) + 100 
-				const saturation = 100
-				const lightness = 50
+				const hue = Math.floor(i / amount * 200) + 140
+				const saturation = 70
+				const lightness = 70
 				const alpha = 1.0
 				this.colorSpectrum.push(getHslaColor(hue, saturation, lightness, alpha))
 			}
@@ -49,8 +56,7 @@ export default {
 			}, 100)
 		},
 		onResize () {
-			this.width = window.innerWidth || document.documentElement.clientWidth
-			this.height = window.innerHeight || document.documentElement.clientHeight
+			this.setChartRect()
 			const scale = window.devicePixelRatio
 			const canvas = document.getElementById('particle')
 			const ctx = canvas.getContext('2d')
@@ -97,28 +103,44 @@ export default {
 				this.interactionParticle.x = e.offsetX
 				this.interactionParticle.y = e.offsetY
 			}
-			const onTouchMove = e => {
-				if (!this.interactionParticle) {
-					createInteractionParticle()
-				}
-				this.interactionParticle.x = e.changedTouches[0].clientX
-				this.interactionParticle.y = e.changedTouches[0].clientY
-			}
-			const onTouchEnd = () => {
+			// const onTouchStart = e => {
+			// 	if (!this.isTouchMoving) {
+			// 		const particle = initParticle(e.changedTouches[0].clientX, e.changedTouches[0].clientY)
+			// 		this.particles.push(particle)
+			// 	}
+			// }
+			// const onTouchMove = e => {
+			// 	this.isTouchMoving = true
+			// 	if (!this.interactionParticle) {
+			// 		createInteractionParticle(e)
+			// 	}
+			// 	this.interactionParticle.x = e.changedTouches[0].clientX
+			// 	this.interactionParticle.y = e.changedTouches[0].clientY
+			// }
+			// const onTouchEnd = () => {
+			// 	this.isTouchMoving = false
+			// 	this.isMouseDown = false
+			// 	removeInteractionParticle()
+			// }
+			const onMouseUp = () => {
+				this.isMouseDown = false
 				removeInteractionParticle()
 			}
 			const onMouseDown = () => {
-				this.mobileInteractionParticle = initParticle(this.interactionParticle.x, this.interactionParticle.y, true)
-				this.particles.push(this.mobileInteractionParticle)
-				// start mobile particle removal countdown
+				this.isMouseDown = true
+				if (this.isMouseDown) {
+					const particle = initParticle(this.interactionParticle.x, this.interactionParticle.y, true)
+					this.particles.push(particle)
+				}
 			}
 
 			canvas.addEventListener('mousemove', onMouseMove)
 			canvas.addEventListener('mouseout', removeInteractionParticle)
-			canvas.addEventListener('touchmove', onTouchMove)
-			canvas.addEventListener('touchend', onTouchEnd)
+			// canvas.addEventListener('touchstart', onTouchStart)
+			// canvas.addEventListener('touchmove', onTouchMove)
+			// canvas.addEventListener('touchend', onTouchEnd)
 			canvas.addEventListener('mousedown', onMouseDown)
-			canvas.addEventListener('mouseup', removeInteractionParticle)
+			canvas.addEventListener('mouseup', onMouseUp)
 
 			const getLimitedRandom = function(min, max, roundToInteger) {
 				let number = Math.random() * (max - min) + min
@@ -128,9 +150,8 @@ export default {
 				return number
 			}
 
-			const initParticle = (xCoord, yCoord, isActive) => {
+			const initParticle = (xCoord, yCoord) => {
 				return {
-					active: isActive || false,
 					color: options.particleColor,
 					radius: getLimitedRandom(1.5, 2.5),
 					opacity: 0,
@@ -182,27 +203,6 @@ export default {
 				if (canvas) {
 					ctx.clearRect(0, 0, this.width, this.height)
 					ctx.globalAlpha = 1
-
-					// let lineWidth = 6
-					// let coords = {
-					// 	from: { x: 0, y: 0 },
-					// 	to: { x: 0, y: this.height }
-					// }
-					// if (this.width < 576) {
-					// 	lineWidth = 8
-					// 	coords.from.x = 0
-					// 	coords.from.y = this.height
-					// 	coords.to.x = this.width
-					// 	coords.to.y = this.height
-					// }
-					// ctx.beginPath()
-					// ctx.strokeStyle = this.currColor
-					// ctx.lineWidth = lineWidth
-					// ctx.moveTo(coords.from.x, coords.from.y)
-					// ctx.lineTo(coords.to.x, coords.to.y)
-					// ctx.moveTo(0, 0)
-					// ctx.lineTo(this.width, 0)
-					// ctx.stroke()
 					for (let i = 0; i < this.particles.length; i++) {
 						for (let j = this.particles.length - 1; j > i; j--) {
 							const p1 = this.particles[i]
@@ -213,32 +213,8 @@ export default {
 								Math.pow(dx, 2) +
 								Math.pow(dy, 2)
 							)
-							let lineColor = options.lineColor
+							let lineColor = this.currColor
 							if (distance < options.lineDistance) {
-								const color = this.currColor
-								if (this.interactionParticle || this.mobileInteractionParticle) {
-									if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
-										lineColor = color
-										p1.active = true
-									}
-									if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
-										lineColor = color
-										p2.active = true
-									}
-									if (p1.active && !p2.active) {
-										p2.active = true
-										lineColor = color
-									} else if (!p1.active && p2.active) {
-										p1.active = true
-										lineColor = color
-									} else if (p1.active && p2.active) {
-										lineColor = color
-									}
-								} else {
-									p1.active = false
-									p2.active = false
-									lineColor = options.lineColor
-								}
 								ctx.beginPath()
 								ctx.strokeStyle = lineColor
 								ctx.globalAlpha = (options.lineDistance - distance) / options.lineDistance * p1.opacity * p2.opacity
@@ -246,13 +222,6 @@ export default {
 								ctx.moveTo(p1.x, p1.y)
 								ctx.lineTo(p2.x, p2.y)
 								ctx.stroke()
-							} else {
-								if (p1 === this.interactionParticle || p1 === this.mobileInteractionParticle) {
-									p2.active = false
-								}
-								if (p2 === this.interactionParticle || p2 === this.mobileInteractionParticle) {
-									p1.active = false
-								}
 							}
 						}
 					}

@@ -1,29 +1,30 @@
-$gray-1: #595959;
-$light-gray-1: #f2f2f2;
-$light-gray-2: #ececec;
-$dark-gray: #3f3f3f;
-$light-gray-3: #e9e9e9;
-
-$eerie-black: #1C1C1C;
-$platinum: #EAECE9;
-$alabaster: #ECEBE4;
-$off-white: #EEF0F2;
-$ghost: #FAFAFF;
-
-.body {
+@import '@/styles/_variables.scss';
+.home {
 	color: $eerie-black;
 	width: 100%;
 	height: 100%;
 	display: grid;
-	grid-template-rows: repeat(4, 600px) 300px;
+	grid-template-rows: repeat(4, 600px) 200px;
 	z-index: 2;
-	.text-wrapper {
+	.text-container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		.header {
-			margin-bottom: 16px;
+			position: relative;
 			font-size: 42px;
+			margin-bottom: 40px;
+			margin-top: 0px;
+			font-weight: 400;
+			&:after {
+				bottom: -20px;
+				left: 0;
+				position: absolute;
+				content: "";
+				width: 60px;
+				height: 3px;
+				background-color: $eerie-black;
+			}
 		}
 		.text {
 			font-size: 16px;
@@ -37,19 +38,19 @@ $ghost: #FAFAFF;
 		grid-template-rows: repeat(4, 1fr);
 		grid-template-columns: repeat(6, 1fr);
 		position: relative;
-		&.intro {
+		&.who {
 			grid-row: 1;
-			.text-wrapper {
+			.text-container {
 				grid-row: 2 / span 2;
 				grid-column: 2 / span 2;
 			}
 			.icon-container {
 				grid-row: 4;
-				grid-column: 5 / span 1;
+				grid-column: 3 / span 2;
 				display: flex;
 				align-items: flex-end;
 				padding-bottom: 20px;
-				.icon-wrapper {
+				.icon-group {
 					height: 34px;
 					width: 100%;
 					justify-content: space-around;
@@ -75,13 +76,16 @@ $ghost: #FAFAFF;
 		}
 		&.what {
 			grid-row: 2;
-			background-color: #1C1C1C;
-			.text-wrapper {
+			background-color: $eerie-black;
+			.text-container {
 				color: $off-white;
 				grid-row: 2 / span 2;
 				grid-column: 4 / span 2;
+				.header::after {
+					background-color: $off-white;
+				}
 			}
-			.line-container {
+			.sine-container {
 				grid-column: 1 / span 3;
 			}
 			.label {
@@ -90,18 +94,15 @@ $ghost: #FAFAFF;
 					border-color: $off-white;
 				}
 			}
-			.line-deco {
-				background-color: $off-white;
-			}
 		}
 		&.why {
 			grid-row: 3;
-			background-color: #FAFAFF;
-			.anim-container {
+			background-color: $ghost;
+			.spiral-container {
 				grid-row: 1 / span 4;
 				grid-column: 4 / span 3;
 			}
-			.text-wrapper {
+			.text-container {
 				grid-row: 2 / span 2;
 				grid-column: 2 / span 2;
 			}
@@ -109,21 +110,64 @@ $ghost: #FAFAFF;
 		&.contact {
 			grid-row: 4;
 			background-color: $off-white;
-			.three-dee {
+			.ring-container {
 				grid-row: 1 / span 4;
 				grid-column: 1 / span 3;
 			}
-			.text-wrapper {
+			.text-container {
 				grid-row: 2 / span 2;
 				grid-column: 4 / span 2;
 			}
 		}
+		&.footer {
+			grid-row: 5;
+			background-color: $eerie-black;
+			.attr-container {
+				display: flex;
+				justify-content: center;
+				grid-row: 4;
+				grid-column: 1 / span 6;
+				color: $ghost;
+				.name-wrapper {
+					font-size: 20px;
+				}
+			}
+			.icon-container {
+				grid-row: 2;
+				grid-column: 3 / span 2;
+				display: flex;
+				align-items: center;
+				padding-top: 20px;
+				.icon-group {
+					height: 34px;
+					width: 100%;
+					justify-content: space-around;
+					display: flex;
+					align-items: center;
+				}
+				.icon {
+					path {
+						fill: $ghost;
+					}
+					&:hover {
+						opacity: 0.6;
+					}
+					cursor: pointer;
+					height: 34px;
+					width: 34px;
+					&-linkedin {
+						height: 30px;
+						width: 30px;
+					}
+				}
+			}
+		}
 	}
+
 	@media (max-width: 900px) {
-		grid-template-rows: repeat(7, 600px);
-		.text-wrapper {
+		grid-template-rows: 600px repeat(6, 500px) 200px;
+		.text-container {
 			.header {
-				margin-bottom: 16px;
 				font-size: 36px;
 			}
 			.text {
@@ -132,103 +176,71 @@ $ghost: #FAFAFF;
 			}
 		}
 		.section {
-			&.intro {
+			&.who {
 				grid-row: 1;
-				background-color: #f8f8f8;
-				.text-wrapper {
+				.text-container {
 					grid-column: 2 / span 3;
 				}
 				.icon-container {
 					grid-row: 4;
 					grid-column: 3 / span 2;
-					display: flex;
-					justify-content: space-around;
-					align-items: flex-end;
-					padding-bottom: 20px;
-					.icon {
-						path {
-							fill: $dark-gray;
-						}
-						&:hover {
-							opacity: 0.6;
-						}
-						cursor: pointer;
-						height: 32px;
-						width: 32px;
-					}
 				}
 			}
 			&.what {
 				grid-row: 2 / span 2;
-				.text-wrapper {
+				.text-container {
 					grid-row: 1 / span 2;
 					grid-column: 2 / span 3;
 				}
-				.line-container {
+				.sine-container {
 					grid-row: 3 / span 2;
 					grid-column: 1 / span 6;
 				}
 			}
 			&.why {
 				grid-row: 4 / span 2;
-				background-color: #f2f2f2;
-				.text-wrapper {
+				.text-container {
 					grid-row: 1 / span 2;
 					grid-column: 2 / span 3;
 				}
-				.anim-container {
+				.spiral-container {
 					grid-row: 3 / span 2;
 					grid-column: 1 / span 6;
 				}
 			}
 			&.contact {
 				grid-row: 6 / span 2;
-				background-color: #e9e9e9;
-				.three-dee {
+				.ring-container {
 					grid-row: 3 / span 2;
 					grid-column: 1 / span 6;
 				}
-				.text-wrapper {
+				.text-container {
 					grid-row: 1 / span 2;
 					grid-column: 2 / span 3;
 				}
 			}
+			&.footer {
+				grid-row: 8;
+				background-color: $eerie-black;
+				.icon-container {
+					grid-row: 2;
+					grid-column: 3 / span 2;
+				}
+			}
 		}
 	}
+
 	@media (max-width: 576px) {
-		grid-template-rows: repeat(7, 600px);
-		.text-wrapper {
-			.header {
-				margin-bottom: 16px;
-				font-size: 36px;
-			}
-			.text {
-				font-size: 14px;
-				line-height: 1.8;
-			}
-		}
 		.section {
-			&.intro {
+			&.who {
 				grid-row: 1;
-				background-color: #f8f8f8;
-				.text-wrapper {
+				.text-container {
 					grid-column: 2 / span 3;
 				}
 				.icon-container {
 					grid-row: 4;
 					grid-column: 2 / span 4;
-					display: flex;
-					justify-content: space-around;
-					align-items: flex-end;
-					padding-bottom: 20px;
 					.icon {
-						path {
-							fill: $dark-gray;
-						}
-						&:hover {
-							opacity: 0.6;
-						}
-						cursor: pointer;
 						height: 32px;
 						width: 32px;
 						&-linkedin {
@@ -240,45 +252,54 @@ $ghost: #FAFAFF;
 			}
 			&.what {
 				grid-row: 2 / span 2;
-				.text-wrapper {
+				.text-container {
 					grid-row: 1 / span 2;
 					grid-column: 2 / span 3;
 				}
-				.line-container {
+				.sine-container {
 					grid-row: 3 / span 2;
 					grid-column: 2 / span 4;
 				}
 			}
 			&.why {
 				grid-row: 4 / span 2;
-				background-color: #f2f2f2;
-				.text-wrapper {
+				.text-container {
 					grid-row: 1 / span 2;
 					grid-column: 2 / span 3;
 				}
-				.anim-container {
+				.spiral-container {
 					grid-row: 3 / span 2;
 					grid-column: 1 / span 6;
 				}
 			}
 			&.contact {
 				grid-row: 6 / span 2;
-				background-color: #e9e9e9;
-				.text-wrapper {
+				.text-container {
 					grid-row: 1 / span 2;
 					grid-column: 2 / span 3;
 				}
-				.three-dee {
+				.ring-container {
 					grid-row: 3 / span 2;
 					grid-column: 1 / span 6;
 				}
-				.line-container {
-					grid-row: 3 / span 2;
+			}
+			&.footer {
+				.icon-container {
+					grid-row: 2;
 					grid-column: 2 / span 4;
+					.icon {
+						height: 32px;
+						width: 32px;
+						&-linkedin {
+							height: 26px;
+							width: 26px;
+						}
+					}
 				}
 			}
 		}
 	}
+
 	.label {
 		&:before {
 			margin: 10px;
@@ -300,7 +321,6 @@ $ghost: #FAFAFF;
 		text-align: center;
 		justify-content: center;
 		position: absolute;
-		// margin-top: -30px;
 		font-size: 48px;
 		&-left {
 			transform-origin: top left;
@@ -309,7 +329,7 @@ $ghost: #FAFAFF;
 		}
 		&-right {
 			transform-origin: bottom right;
-			top: 25%;
+			top: 20%;
 			right: 0%;
 		}
 		.num {
@@ -318,6 +338,12 @@ $ghost: #FAFAFF;
 		.text {
 			font-size: 18px;
 			margin-right: 40px;
+		}
+		@media (max-width: 576px) {
+			font-size: 44px;
+			.text {
+				font-size: 16px;
+			}
 		}
 	}
 }

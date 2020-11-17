@@ -1,6 +1,7 @@
 <template>
-	<div class="menu menu-more-container" :class="{ 'toggled': isToggled }">
-		<div class="menu-more-wrapper">
+<nav class="nav-container">
+	<div class="menu-container" :class="{ 'toggled': isToggled }">
+		<div class="menu-wrapper">
 			<ol class="nav-group">
 				<li v-for="({ name, id }, index) in sections" :key="index">
 					<a @click.stop="handleLink(id)">
@@ -15,6 +16,7 @@
 			</div>
 		</div>
 	</div>
+</nav>
 </template>
 <script>
 export default {
@@ -34,7 +36,7 @@ export default {
 			isToggled: false,
 			sections: [
 				{
-					id: 'intro',
+					id: 'who',
 					name: '01'
 				},
 				{
@@ -58,17 +60,18 @@ export default {
 		},
 		handleLink (hash) {
 			this.handleToggle()
+			window.location.hash = ''
 			window.location.hash = `#${hash}`
 		}
 	}
 }
 </script>
 <style lang="scss">
-	.menu-more-container {
+	.menu-container {
 		z-index: 101;
-		top: 85%;
 		transform: translateX(-198px);
 		transition: all 0.3s ease;
+		top: 10%;
 		position: fixed;
 		height: 40px;
 		width: 250px;
@@ -76,8 +79,19 @@ export default {
 		border-radius: 4px;
 		&.toggled {
 			transform: translateX(-40px);
+			.menu-wrapper .btn-wrapper .dot {
+				&-1 {
+					background-color: hsl(10, 80%, 70%);
+				}
+				&-2 {
+					background-color: hsl(90, 80%, 70%);
+				}
+				&-3 {
+					background-color: hsl(160, 80%, 70%);
+				}
+			}
 		}
-		.menu-more-wrapper {
+		.menu-wrapper {
 			padding: 0px 10px 0px 60px;
 			height: 100%;
 			width: 100%;
@@ -107,19 +121,32 @@ export default {
 				width: 34px;
 				justify-content: space-between;
 				align-items: center;
+				&:hover {
+					.dot {
+						&-1 {
+							background-color: hsl(10, 80%, 70%);
+						}
+						&-2 {
+							background-color: hsl(90, 80%, 70%);
+						}
+						&-3 {
+							background-color: hsl(160, 80%, 70%);
+						}
+					}
+				}
 				.dot {
 					background-color: #EEF0F2;
 					height: 8px;
 					width: 8px;
 					border-radius: 50%;
 					&-1 {
-
+						transition: all 0.3s ease 0.1s;
 					}
 					&-2 {
-
+						transition: all 0.3s ease 0.2s;
 					}
 					&-3 {
-
+						transition: all 0.3s ease 0.3s;
 					}
 				}
 			}
