@@ -2,104 +2,16 @@
 	<div class="ring-container">
 		<div class="ring-wrapper">
 			<div class="render-layer">
-				<div class="cube cube-1">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-2">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-3">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-4">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-5">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-6">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-7">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-8">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-9">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
-					</div>
-				</div>
-				<div class="cube cube-10">
-					<div class="cube-wrapper">
-						<div class="side side-front"></div>
-						<div class="side side-back"></div>
-						<div class="side side-top"></div>
-						<div class="side side-bottom"></div>
-						<div class="side side-left"></div>
-						<div class="side side-right"></div>
+				<div v-for="(n, i) in 10" :key="i">
+					<div :class="`cube cube-${n}`">
+						<div class="cube-wrapper">
+							<div class="side side-front"></div>
+							<div class="side side-back"></div>
+							<div class="side side-top"></div>
+							<div class="side side-bottom"></div>
+							<div class="side side-left"></div>
+							<div class="side side-right"></div>
+						</div>
 					</div>
 				</div>
 			</div>
