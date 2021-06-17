@@ -45,10 +45,6 @@ export default {
 	data () {
 		return {
 			sections: [
-				// {
-				// 	id: 'home',
-				// 	name: '00 HOME'
-				// },
 				{
 					id: 'hello',
 					name: '01 HELLO'

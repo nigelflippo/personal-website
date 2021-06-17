@@ -30,11 +30,7 @@ export default {
 	methods: {
 		setChartRect () {
 			let width = window.innerWidth || document.documentElement.clientWidth
-			// let height = window.innerHeight || document.documentElement.clientHeight
 			let height = 600
-			// if (window.innerWidth > 576) {
-			// 	width = width / 2
-			// }
 			this.width = width
 			this.height = height
 		},
@@ -103,25 +99,6 @@ export default {
 				this.interactionParticle.x = e.offsetX
 				this.interactionParticle.y = e.offsetY
 			}
-			// const onTouchStart = e => {
-			// 	if (!this.isTouchMoving) {
-			// 		const particle = initParticle(e.changedTouches[0].clientX, e.changedTouches[0].clientY)
-			// 		this.particles.push(particle)
-			// 	}
-			// }
-			// const onTouchMove = e => {
-			// 	this.isTouchMoving = true
-			// 	if (!this.interactionParticle) {
-			// 		createInteractionParticle(e)
-			// 	}
-			// 	this.interactionParticle.x = e.changedTouches[0].clientX
-			// 	this.interactionParticle.y = e.changedTouches[0].clientY
-			// }
-			// const onTouchEnd = () => {
-			// 	this.isTouchMoving = false
-			// 	this.isMouseDown = false
-			// 	removeInteractionParticle()
-			// }
 			const onMouseUp = () => {
 				this.isMouseDown = false
 				removeInteractionParticle()
@@ -136,9 +113,6 @@ export default {
 
 			canvas.addEventListener('mousemove', onMouseMove)
 			canvas.addEventListener('mouseout', removeInteractionParticle)
-			// canvas.addEventListener('touchstart', onTouchStart)
-			// canvas.addEventListener('touchmove', onTouchMove)
-			// canvas.addEventListener('touchend', onTouchEnd)
 			canvas.addEventListener('mousedown', onMouseDown)
 			canvas.addEventListener('mouseup', onMouseUp)
 

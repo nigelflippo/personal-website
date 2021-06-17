@@ -11,7 +11,6 @@
 </template>
 <script>
 import Loader from '@/components/Loader'
-// import Nav from '@/components/Nav.vue'
 import Home from '@/components/Home.vue'
 import More from'@/components/More'
 
@@ -19,13 +18,11 @@ import { mapGetters } from 'vuex'
 export default {
 	components: {
 		Loader,
-		// Nav,
 		Home,
 		More
 	},
 	computed: {
 		...mapGetters([
-			// 'isLoading',
 			'isToggled'
 		])
 	},
@@ -70,7 +67,6 @@ export default {
 	}
 	html {
 		box-sizing: border-box;
-		// height: 100%;
 		height: 100vh;
 		height: calc(var(--vh, 1vh) * 100);
 		width: 100%;
